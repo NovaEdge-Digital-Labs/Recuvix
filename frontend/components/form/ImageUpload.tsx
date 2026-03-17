@@ -64,7 +64,8 @@ export function ImageUpload({ label, description, value, onChange, type, classNa
         formData.append("type", type);
 
         try {
-            const res = await fetch("http://localhost:5000/api/upload/assets", {
+            const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+            const res = await fetch(`${backendUrl}/api/upload/assets`, {
                 method: "POST",
                 body: formData,
             });
