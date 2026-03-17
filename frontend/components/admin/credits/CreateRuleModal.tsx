@@ -26,9 +26,20 @@ interface CreateRuleModalProps {
     onSuccess: (rule: any) => void;
 }
 
+interface FormData {
+    name: string;
+    triggerEvent: string;
+    creditsAmount: number;
+    creditsExpireDays: number;
+    isActive: boolean;
+    conditionCountry: string;
+    conditionMinBlogs: number;
+    maxGrantsPerUser: number;
+}
+
 export const CreateRuleModal = ({ isOpen, onClose, onSuccess }: CreateRuleModalProps) => {
     const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         name: '',
         triggerEvent: 'signup',
         creditsAmount: 5,
@@ -97,7 +108,7 @@ export const CreateRuleModal = ({ isOpen, onClose, onSuccess }: CreateRuleModalP
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label className="text-zinc-400">Trigger Event</Label>
-                                <Select value={formData.triggerEvent} onValueChange={(val) => setFormData({ ...formData, triggerEvent: val })}>
+                                <Select value={formData.triggerEvent ?? ''} onValueChange={(val: string | null) => setFormData({ ...formData, triggerEvent: val ?? '' })}>
                                     <SelectTrigger className="bg-zinc-950 border-zinc-900">
                                         <SelectValue />
                                     </SelectTrigger>

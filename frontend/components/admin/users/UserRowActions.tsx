@@ -39,10 +39,8 @@ export const UserRowActions = ({
 }: UserRowActionsProps) => {
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <button className="p-2 hover:bg-zinc-900 rounded-lg transition-colors text-zinc-500 hover:text-white">
-                    <MoreHorizontal className="w-4 h-4" />
-                </button>
+            <DropdownMenuTrigger className="p-2 hover:bg-zinc-900 rounded-lg transition-colors text-zinc-500 hover:text-white">
+                <MoreHorizontal className="w-4 h-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 bg-zinc-950 border-zinc-900 text-white">
                 <DropdownMenuItem onClick={() => onViewDetails(user)} className="gap-2 cursor-pointer focus:bg-zinc-900 focus:text-white">

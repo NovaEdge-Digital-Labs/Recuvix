@@ -10,7 +10,8 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        const { error } = await supabaseAdmin.rpc('cleanup_voice_audio_files');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { error } = await supabaseAdmin.rpc('cleanup_voice_audio_files' as any);
 
         if (error) {
             console.error('RPC Error (cleanup_voice_audio_files):', error);

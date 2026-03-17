@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { supabaseAdmin } from "@/lib/supabase/admin";
 import {
     Dialog,
     DialogContent,
@@ -58,15 +57,16 @@ export function HealthCheckModal({ isOpen, onClose, keys, onComplete }: HealthCh
 
             setResults(prev => [...prev, result]);
 
-            // Update DB
-            await (supabaseAdmin
-                .from('platform_api_keys') as any)
-                .update({
+            // Update DB via API
+            await fetch(`/api/admin/keys/${key.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
                     is_healthy: success,
                     last_error: success ? null : result.error,
                     last_error_at: success ? null : new Date().toISOString()
                 })
-                .eq('id', key.id);
+            });
 
             setProgress(((i + 1) / total) * 100);
         }

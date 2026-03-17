@@ -10,7 +10,8 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        const { error } = await supabaseAdmin.rpc('mark_missed_calendar_events');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { error } = await supabaseAdmin.rpc('mark_missed_calendar_events' as any);
 
         if (error) {
             console.error('RPC Error (mark_missed_calendar_events):', error);

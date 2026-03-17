@@ -18,9 +18,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         if (validated.isSuspended !== undefined) updates.is_suspended = validated.isSuspended;
         if (validated.suspendedReason !== undefined) updates.suspended_reason = validated.suspendedReason;
 
-        const { data, error } = await (supabaseAdmin
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const db = supabaseAdmin as any;
+        const { data, error } = await db
             .from('profiles')
-            .update(updates as any) as any)
+            .update(updates)
             .eq('id', id)
             .select()
             .single();

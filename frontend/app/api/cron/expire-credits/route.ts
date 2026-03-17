@@ -10,7 +10,8 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        const { error } = await supabaseAdmin.rpc('handle_expired_credits');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { error } = await supabaseAdmin.rpc('handle_expired_credits' as any);
 
         if (error) {
             console.error('RPC Error (handle_expired_credits):', error);

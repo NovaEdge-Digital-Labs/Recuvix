@@ -112,11 +112,26 @@ export const workspacesService = {
         return data || [];
     },
 
-    async logActivity(data: Database['public']['Tables']['workspace_activity']['Insert'], client?: any): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async logActivity(data: any, client?: any): Promise<void> {
         const supabase = client || createClient();
+
+        // Standardize legacy log object structures to the updated database schema
+        const insertData: Database['public']['Tables']['workspace_activity']['Insert'] = {
+            workspace_id: data.workspace_id,
+            actor_id: data.actor_id || data.user_id,
+            type: data.type || data.action,
+            metadata: data.metadata || {
+                user_email: data.user_email,
+                entity_type: data.entity_type,
+                entity_id: data.entity_id,
+                entity_name: data.entity_name,
+            }
+        };
+
         const { error } = await supabase
             .from('workspace_activity')
-            .insert(data);
+            .insert(insertData);
         if (error) console.error('Failed to log workspace activity:', error);
     }
 };

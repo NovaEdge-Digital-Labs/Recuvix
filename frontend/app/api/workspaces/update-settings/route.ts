@@ -63,7 +63,8 @@ export async function PATCH(req: Request) {
             default_word_count: updates.defaultWordCount,
             default_output_format: updates.defaultOutputFormat,
             settings: updates.settings as any,
-        }, supabase);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any, supabase);
 
         // 3. Log activity
         await workspacesService.logActivity({

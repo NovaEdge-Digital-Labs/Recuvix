@@ -3,7 +3,7 @@
 import { useCredits } from "@/hooks/useCredits";
 import { Coins, Plus } from "lucide-react";
 import Link from "next/link";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { cn } from "@/lib/utils";
 
 export function CreditBalanceWidget() {

@@ -18,7 +18,9 @@ export async function POST(req: NextRequest) {
 
         // If no specific userIds provided, build query based on filters
         if (userIds.length === 0) {
-            let query = supabaseAdmin
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const db = supabaseAdmin as any;
+            let query = db
                 .from('profiles')
                 .select('id');
 
@@ -33,7 +35,7 @@ export async function POST(req: NextRequest) {
             const { data: matchedUsers, error: queryError } = await query;
 
             if (queryError) throw queryError;
-            userIds = matchedUsers.map(u => u.id);
+            userIds = matchedUsers.map((u: { id: string }) => u.id);
         }
 
         if (validated.dryRun) {
@@ -94,7 +96,9 @@ export async function POST(req: NextRequest) {
                         totalCreditsGiven += validated.credits;
 
                         // Notify user (Optional: could be throttled or batched)
-                        const { data: profile } = await supabaseAdmin
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        const db = supabaseAdmin as any;
+                        const { data: profile } = await db
                             .from('profiles')
                             .select('email, credits_balance')
                             .eq('id', uid)

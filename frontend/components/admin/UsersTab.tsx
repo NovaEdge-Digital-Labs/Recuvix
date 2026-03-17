@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabaseAdmin } from "@/lib/supabase/admin";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,16 +13,15 @@ export function UsersTab() {
 
     const fetchUsers = async () => {
         setIsLoading(true);
-        const { data, error } = await supabaseAdmin
-            .from('profiles')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(20);
-
-        if (!error && data) {
-            setUsers(data);
+        try {
+            const res = await fetch('/api/admin/users?limit=20');
+            const data = await res.json();
+            if (data.users) setUsers(data.users);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
     };
 
     useEffect(() => {

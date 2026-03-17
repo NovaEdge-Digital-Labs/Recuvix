@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { supabaseAdmin } from "@/lib/supabase/admin";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -50,19 +49,19 @@ export function KeyCard({ keyData, onUpdate }: KeyCardProps) {
     };
 
     const handleToggleActive = async () => {
-        await (supabaseAdmin
-            .from('platform_api_keys') as any)
-            .update({ is_active: !keyData.is_active })
-            .eq('id', keyData.id);
+        await fetch(`/api/admin/keys/${keyData.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ is_active: !keyData.is_active })
+        });
         onUpdate();
     };
 
     const handleDelete = async () => {
         if (confirm(`Are you sure you want to delete "${keyData.label}"?`)) {
-            await (supabaseAdmin
-                .from('platform_api_keys') as any)
-                .delete()
-                .eq('id', keyData.id);
+            await fetch(`/api/admin/keys/${keyData.id}`, {
+                method: 'DELETE'
+            });
             onUpdate();
         }
     };
@@ -74,10 +73,11 @@ export function KeyCard({ keyData, onUpdate }: KeyCardProps) {
         await new Promise(r => setTimeout(r, 1000));
 
         // Update healthy status randomly for demo purposes
-        await (supabaseAdmin
-            .from('platform_api_keys') as any)
-            .update({ is_healthy: true, last_success_at: new Date().toISOString() })
-            .eq('id', keyData.id);
+        await fetch(`/api/admin/keys/${keyData.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ is_healthy: true, last_success_at: new Date().toISOString() })
+        });
 
         setIsTesting(false);
         onUpdate();

@@ -14,7 +14,9 @@ export async function POST(req: NextRequest) {
         const validated = revokeGrantSchema.parse(body);
 
         // 1. Get grant info
-        const { data: grant, error: grantError } = await supabaseAdmin
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const db = supabaseAdmin as any;
+        const { data: grant, error: grantError } = await db
             .from('credit_grants')
             .select('*, profiles(email)')
             .eq('id', validated.grantId)

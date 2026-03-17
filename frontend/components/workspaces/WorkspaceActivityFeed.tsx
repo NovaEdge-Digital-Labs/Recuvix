@@ -15,9 +15,15 @@ import {
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { workspacesService } from '@/lib/db/workspacesService';
-import type { Database } from '@/lib/supabase/database';
-
-type Activity = Database['public']['Tables']['workspace_activity']['Row'];
+// workspace_activity is not in generated types yet — use a local interface
+interface Activity {
+    id: string;
+    workspace_id: string;
+    actor_id: string | null;
+    type: string;
+    metadata: Record<string, any> | null;
+    created_at: string;
+}
 
 const ACTION_ICONS: Record<string, LucideIcon> = {
     'workspace_created': PlusCircle,
@@ -40,19 +46,20 @@ const ACTION_COLORS: Record<string, string> = {
 };
 
 function ActivityItem({ activity }: { activity: Activity }) {
-    const Icon = (ACTION_ICONS[activity.action as string] || MoreHorizontal) as LucideIcon;
-    const colorClass = ACTION_COLORS[activity.action as string] || 'text-muted-foreground bg-muted';
+    const Icon = (ACTION_ICONS[activity.type] || MoreHorizontal) as LucideIcon;
+    const colorClass = ACTION_COLORS[activity.type] || 'text-muted-foreground bg-muted';
+    const emailStr = (activity.metadata?.user_email as string) || '';
 
     const getActionLabel = () => {
-        switch (activity.action) {
+        switch (activity.type) {
             case 'workspace_created': return 'created the workspace';
-            case 'member_invited': return `invited ${(activity.metadata as any)?.email || 'a new member'}`;
+            case 'member_invited': return `invited ${activity.metadata?.email || 'a new member'}`;
             case 'member_joined': return 'joined the workspace';
-            case 'blog_generated': return `generated blog: ${activity.entity_name || 'Untitled'}`;
-            case 'blog_approved': return `approved blog: ${activity.entity_name || 'Untitled'}`;
+            case 'blog_generated': return `generated blog: ${activity.metadata?.entity_name || 'Untitled'}`;
+            case 'blog_approved': return `approved blog: ${activity.metadata?.entity_name || 'Untitled'}`;
             case 'settings_changed': return 'updated workspace settings';
-            case 'credits_purchased': return `purchased ${(activity.metadata as any)?.amount || 0} credits`;
-            default: return activity.action;
+            case 'credits_purchased': return `purchased ${activity.metadata?.amount || 0} credits`;
+            default: return activity.type;
         }
     };
 
@@ -63,7 +70,7 @@ function ActivityItem({ activity }: { activity: Activity }) {
             </div>
             <div className="flex-1 min-w-0">
                 <p className="text-sm">
-                    <span className="font-medium text-foreground">{activity.user_email?.split('@')[0]}</span>
+                    <span className="font-medium text-foreground">{emailStr.split('@')[0]}</span>
                     {' '}
                     <span className="text-muted-foreground">{getActionLabel()}</span>
                 </p>
@@ -83,7 +90,7 @@ export function WorkspaceActivityFeed({ workspaceId, limit = 10 }: { workspaceId
         const fetchActivity = async () => {
             try {
                 const data = await workspacesService.getActivity(workspaceId, limit);
-                setActivities(data);
+                setActivities(data as Activity[]);
             } catch (err) {
                 console.error('Failed to load activity:', err);
             } finally {

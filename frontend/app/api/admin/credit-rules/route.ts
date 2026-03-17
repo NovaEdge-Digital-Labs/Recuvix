@@ -8,7 +8,9 @@ export async function GET(req: NextRequest) {
         const isAdmin = await checkAdminAuth();
         if (!isAdmin) return unauthorizedResponse();
 
-        const { data: rules, error } = await supabaseAdmin
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const db = supabaseAdmin as any;
+        const { data: rules, error } = await db
             .from('credit_rules')
             .select('*')
             .order('created_at', { ascending: false });
@@ -30,7 +32,9 @@ export async function POST(req: NextRequest) {
         const body = await req.json();
         const validated = creditRuleSchema.parse(body);
 
-        const { data: rule, error } = await supabaseAdmin
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const db = supabaseAdmin as any;
+        const { data: rule, error } = await db
             .from('credit_rules')
             .insert(validated)
             .select()

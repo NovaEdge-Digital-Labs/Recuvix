@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { supabaseAdmin } from "@/lib/supabase/admin";
-import { encryptKey, maskKey } from "@/lib/managed/keyEncryption";
 import {
     Dialog,
     DialogContent,
@@ -62,21 +60,13 @@ export function AddKeyModal({ isOpen, onClose, onSuccess }: AddKeyModalProps) {
         setIsLoading(true);
 
         try {
-            const { error } = await (supabaseAdmin
-                .from('platform_api_keys') as any)
-                .insert({
-                    provider: formData.provider,
-                    model: formData.model,
-                    label: formData.label,
-                    encrypted_key: encryptKey(formData.apiKey),
-                    key_hint: maskKey(formData.apiKey),
-                    priority: formData.priority,
-                    daily_request_limit: formData.dailyLimit,
-                    is_active: true,
-                    is_healthy: true,
-                });
+            const res = await fetch('/api/admin/keys', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
 
-            if (error) throw error;
+            if (!res.ok) throw new Error('Failed to save key');
 
             onSuccess();
             onClose();

@@ -12,7 +12,9 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
         const isDryRun = body.dryRun === true;
 
         // 1. Get the rule
-        const { data: rule, error: ruleError } = await supabaseAdmin
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const db = supabaseAdmin as any;
+        const { data: rule, error: ruleError } = await db
             .from('credit_rules')
             .select('*')
             .eq('id', id)
@@ -37,7 +39,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
         const { data: matchedUsers, error: queryError } = await query;
         if (queryError) throw queryError;
 
-        const userIds = matchedUsers.map(u => u.id);
+        const userIds = matchedUsers.map((u: { id: string }) => u.id);
 
         if (isDryRun) {
             return NextResponse.json({

@@ -77,7 +77,8 @@ export function useGSCData() {
             gscConfigService.get(user.id)
                 .then(row => {
                     if (row) {
-                        const config = mapSupabaseToGSCConfig(row);
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        const config = mapSupabaseToGSCConfig(row as any);
                         setGscConfig(config);
                         localStorage.setItem(GSC_CONFIG_KEY, JSON.stringify(config));
                     }
@@ -85,7 +86,8 @@ export function useGSCData() {
 
             trackedBlogsService.getAll(user.id)
                 .then(rows => {
-                    const mapped = rows.map(mapSupabaseToTrackedBlog);
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const mapped = rows.map((r: any) => mapSupabaseToTrackedBlog(r));
                     setTrackedBlogs(mapped);
                     localStorage.setItem(TRACKED_BLOGS_KEY, JSON.stringify(mapped));
                 });

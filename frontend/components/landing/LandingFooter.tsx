@@ -19,15 +19,15 @@ export function LandingFooter() {
                             The AI content platform for serious creators and agencies.
                         </p>
                         <div className="flex items-center gap-4 mt-2">
-                            <a href="#" className="w-10 h-10 rounded border border-white/10 flex items-center justify-center hover:bg-[#e8ff47] hover:text-black hover:border-[#e8ff47] transition-all">
+                            <a href="https://www.youtube.com/@novaedgedigitallabs" className="w-10 h-10 rounded border border-white/10 flex items-center justify-center hover:bg-[#e8ff47] hover:text-black hover:border-[#e8ff47] transition-all">
                                 <span className="sr-only">Twitter</span>
                                 𝕏
                             </a>
-                            <a href="#" className="w-10 h-10 rounded border border-white/10 flex items-center justify-center hover:bg-[#e8ff47] hover:text-black hover:border-[#e8ff47] transition-all">
+                            <a href="https://www.linkedin.com/company/novaedgedigitallabs/" className="w-10 h-10 rounded border border-white/10 flex items-center justify-center hover:bg-[#e8ff47] hover:text-black hover:border-[#e8ff47] transition-all">
                                 <span className="sr-only">LinkedIn</span>
                                 in
                             </a>
-                            <a href="#" className="w-10 h-10 rounded border border-white/10 flex items-center justify-center hover:bg-[#e8ff47] hover:text-black hover:border-[#e8ff47] transition-all">
+                            <a href="https://www.instagram.com/novaedgedigitallabs/" className="w-10 h-10 rounded border border-white/10 flex items-center justify-center hover:bg-[#e8ff47] hover:text-black hover:border-[#e8ff47] transition-all">
                                 <span className="sr-only">Instagram</span>
                                 ig
                             </a>

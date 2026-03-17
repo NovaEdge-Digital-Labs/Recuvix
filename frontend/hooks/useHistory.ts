@@ -51,7 +51,8 @@ export const useHistory = (workspaceId?: string) => {
             limit: 100,
             workspaceId: workspaceId
         });
-        return data.map(mapSupabaseToHistoryEntry);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return data.map((row: any) => mapSupabaseToHistoryEntry(row));
     };
 
     const { data: supabaseIdx, error: supabaseError, mutate } = useSWR(
@@ -285,7 +286,8 @@ export const useHistory = (workspaceId?: string) => {
             // Try fetching from Supabase if not in local cache
             const row = await blogsService.getById(id);
             if (row) {
-                content = mapSupabaseToHistoryContent(row);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                content = mapSupabaseToHistoryContent(row as any);
             }
         }
 
@@ -435,7 +437,8 @@ export const useHistory = (workspaceId?: string) => {
         if (!content && user) {
             const row = await blogsService.getById(id);
             if (row) {
-                content = mapSupabaseToHistoryContent(row);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                content = mapSupabaseToHistoryContent(row as any);
             }
         }
 

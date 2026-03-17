@@ -22,7 +22,9 @@ export async function GET(req: NextRequest) {
         const joinedAfter = searchParams.get('joinedAfter');
         const joinedBefore = searchParams.get('joinedBefore');
 
-        let query = supabaseAdmin
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const db = supabaseAdmin as any;
+        let query = db
             .from('profiles')
             .select(`
         *,
@@ -77,10 +79,10 @@ export async function GET(req: NextRequest) {
         if (error) throw error;
 
         // Platform Stats
-        const { data: totalCount } = await supabaseAdmin.from('profiles').select('id', { count: 'exact', head: true });
-        const { data: activeToday } = await supabaseAdmin.from('profiles').select('id', { count: 'exact', head: true }).gte('last_active_at', new Date(new Date().setHours(0, 0, 0, 0)).toISOString());
-        const { data: newThisWeek } = await supabaseAdmin.from('profiles').select('id', { count: 'exact', head: true }).gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString());
-        const { data: byokUsers } = await supabaseAdmin.from('profiles').select('id', { count: 'exact', head: true }).eq('managed_mode_enabled', false);
+        const { data: totalCount } = await db.from('profiles').select('id', { count: 'exact', head: true });
+        const { data: activeToday } = await db.from('profiles').select('id', { count: 'exact', head: true }).gte('last_active_at', new Date(new Date().setHours(0, 0, 0, 0)).toISOString());
+        const { data: newThisWeek } = await db.from('profiles').select('id', { count: 'exact', head: true }).gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString());
+        const { data: byokUsers } = await db.from('profiles').select('id', { count: 'exact', head: true }).eq('managed_mode_enabled', false);
 
         return NextResponse.json({
             users: users.map((u: any) => ({
@@ -91,7 +93,7 @@ export async function GET(req: NextRequest) {
             page,
             totalPages: Math.ceil((count || 0) / limit),
             stats: {
-                totalUsers: totalCount?.length || 0, // Wait, select head true doesn't return length like this in some versions
+                totalUsers: totalCount?.length || 0,
                 activeToday: activeToday?.length || 0,
                 newThisWeek: newThisWeek?.length || 0,
                 byokUsers: byokUsers?.length || 0,

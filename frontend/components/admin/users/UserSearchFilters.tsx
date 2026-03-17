@@ -19,8 +19,8 @@ export const UserSearchFilters = ({ filters, setFilters }: UserSearchFiltersProp
         setFilters({ ...filters, search: e.target.value, page: 1 });
     };
 
-    const handleFilterChange = (key: string, value: string) => {
-        setFilters({ ...filters, [key]: value, page: 1 });
+    const handleFilterChange = (key: string, value: string | null) => {
+        setFilters({ ...filters, [key]: value ?? '', page: 1 });
     };
 
     return (

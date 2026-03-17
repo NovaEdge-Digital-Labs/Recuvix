@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabaseAdmin } from "@/lib/supabase/admin";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,13 +22,15 @@ export function SettingsTab() {
 
     const fetchSettings = async () => {
         setIsLoading(true);
-        const { data, error } = await (supabaseAdmin
-            .from('platform_settings') as any)
-            .select('*');
-        if (!error && data) {
-            setSettings(data);
+        try {
+            const res = await fetch('/api/admin/settings');
+            const data = await res.json();
+            if (data.success && data.settings) setSettings(data.settings);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -42,14 +43,19 @@ export function SettingsTab() {
 
     const handleSave = async () => {
         setIsSaving(true);
-        for (const setting of settings) {
-            await (supabaseAdmin
-                .from('platform_settings') as any)
-                .update({ value: setting.value, updated_at: new Date().toISOString() })
-                .eq('key', setting.key);
+        try {
+            await fetch('/api/admin/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ settings })
+            });
+            alert('Settings saved successfully!');
+        } catch (err) {
+            console.error(err);
+            alert('Failed to save settings.');
+        } finally {
+            setIsSaving(false);
         }
-        setIsSaving(false);
-        alert('Settings saved successfully!');
     };
 
     if (isLoading) return <div className="h-64 bg-zinc-900/20 rounded-2xl animate-pulse" />;

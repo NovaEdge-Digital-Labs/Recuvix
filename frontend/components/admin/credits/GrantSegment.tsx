@@ -133,7 +133,7 @@ export const GrantSegment = ({ onGrantComplete }: { onGrantComplete?: () => void
 
                         <div className="space-y-2">
                             <Label className="text-zinc-400 text-xs">Management Mode</Label>
-                            <Select value={formData.byokOnly} onValueChange={(val) => setFormData({ ...formData, byokOnly: val })}>
+                            <Select value={formData.byokOnly} onValueChange={(val: string | null) => setFormData({ ...formData, byokOnly: val ?? 'all' })}>
                                 <SelectTrigger className="bg-zinc-900 border-zinc-800">
                                     <SelectValue />
                                 </SelectTrigger>
@@ -197,7 +197,7 @@ export const GrantSegment = ({ onGrantComplete }: { onGrantComplete?: () => void
 
                         <div className="space-y-2">
                             <Label className="text-zinc-400 text-xs">Expiry</Label>
-                            <Select value={formData.expiresInDays} onValueChange={(val) => setFormData({ ...formData, expiresInDays: val })}>
+                            <Select value={formData.expiresInDays} onValueChange={(val: string | null) => setFormData({ ...formData, expiresInDays: val ?? '30' })}>
                                 <SelectTrigger className="bg-zinc-900 border-zinc-800">
                                     <SelectValue />
                                 </SelectTrigger>

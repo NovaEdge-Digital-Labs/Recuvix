@@ -40,7 +40,7 @@ export default function WorkspaceDashboard() {
                 if (!mError && membersCount !== null) setMemberCount(membersCount);
 
                 // Fetch team blogs count
-                const { count: blogsCount, error: bError } = await supabase
+                const { count: blogsCount, error: bError } = await (supabase as any)
                     .from('user_blogs')
                     .select('*', { count: 'exact', head: true })
                     .eq('workspace_id', activeWorkspace!.id);

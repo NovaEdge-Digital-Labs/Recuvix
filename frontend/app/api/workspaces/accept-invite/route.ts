@@ -63,12 +63,14 @@ export async function GET(req: Request) {
         // 6. Log activity
         await workspacesService.logActivity({
             workspace_id: membership.workspace_id,
-            user_id: user.id,
-            user_email: user.email,
-            action: 'member_joined',
-            entity_type: 'member',
-            entity_id: user.id,
-            entity_name: user.email,
+            actor_id: user.id,
+            type: 'member_joined',
+            metadata: {
+                user_email: user.email,
+                entity_type: 'member',
+                entity_id: user.id,
+                entity_name: user.email,
+            }
         }, supabase);
 
         return NextResponse.redirect(new URL(`/workspace/${membership.workspace.slug}`, req.url));

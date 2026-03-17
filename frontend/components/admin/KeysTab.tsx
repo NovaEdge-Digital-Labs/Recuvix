@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabaseAdmin } from "@/lib/supabase/admin";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -25,15 +24,17 @@ export function KeysTab() {
 
     const fetchKeys = async () => {
         setIsLoading(true);
-        const { data, error } = await (supabaseAdmin
-            .from('platform_api_keys') as any)
-            .select('*')
-            .order('priority', { ascending: true });
-
-        if (!error && data) {
-            setKeys(data);
+        try {
+            const res = await fetch('/api/admin/keys');
+            const data = await res.json();
+            if (data.success && data.keys) {
+                setKeys(data.keys);
+            }
+        } catch (err) {
+            console.error('Failed to fetch keys', err);
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
     };
 
     useEffect(() => {

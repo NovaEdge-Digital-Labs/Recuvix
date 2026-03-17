@@ -15,7 +15,6 @@ import {
 import { LabelBadge } from './LabelBadge';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { supabaseAdmin } from '@/lib/supabase/admin';
 
 interface UserDetailPanelProps {
     user: any;
@@ -32,42 +31,30 @@ export const UserDetailPanel = ({ user, isOpen, onClose, onUpdate }: UserDetailP
     const [creditHistory, setCreditHistory] = useState<any[]>([]);
     const [loadingHistory, setLoadingHistory] = useState(false);
 
-    useEffect(() => {
-        if (user && isOpen) {
-            setAdminNote(user.admin_note || '');
-            fetchStats();
-            fetchCreditHistory();
-        }
-    }, [user, isOpen]);
-
-    const fetchStats = async () => {
+    const fetchData = async () => {
         setLoadingStats(true);
+        setLoadingHistory(true);
         try {
-            const { data, error } = await supabaseAdmin.rpc('get_user_admin_stats', { p_user_id: user.id });
-            if (!error) setStats(data);
+            const response = await fetch(`/api/admin/users/${user.id}/stats`);
+            const data = await response.json();
+            if (data.success) {
+                setStats(data.stats);
+                setCreditHistory(data.creditHistory);
+            }
         } catch (err) {
             console.error(err);
         } finally {
             setLoadingStats(false);
-        }
-    };
-
-    const fetchCreditHistory = async () => {
-        setLoadingHistory(true);
-        try {
-            const { data, error } = await supabaseAdmin
-                .from('credit_transactions')
-                .select('*')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: false })
-                .limit(5);
-            if (!error) setCreditHistory(data);
-        } catch (err) {
-            console.error(err);
-        } finally {
             setLoadingHistory(false);
         }
     };
+
+    useEffect(() => {
+        if (user && isOpen) {
+            setAdminNote(user.admin_note || '');
+            fetchData();
+        }
+    }, [user, isOpen]);
 
     const handleSaveNote = async () => {
         if (adminNote === user?.admin_note) return;

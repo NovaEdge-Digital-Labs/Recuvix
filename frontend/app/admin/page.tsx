@@ -59,7 +59,7 @@ export default function AdminDashboardPage() {
                     <p className="text-zinc-500">Manage API infrastructure, oversee users, and automate growth engines.</p>
                 </div>
 
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+                <Tabs value={activeTab} onValueChange={setActiveTab} orientation="horizontal" className="w-full flex flex-col space-y-6">
                     <TabsList className="bg-zinc-900/50 border border-zinc-900 p-1.5 h-12 inline-flex rounded-xl">
                         <TabsTrigger value="keys" className="data-[state=active]:bg-zinc-800 data-[state=active]:text-white rounded-lg gap-2 h-full px-4 text-xs font-bold uppercase tracking-wider">
                             <Key className="w-4 h-4" />

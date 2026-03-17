@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkAdminAuth, unauthorizedResponse } from '@/lib/utils/adminAuth';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { creditRuleSchema } from '@/lib/validators/adminCreditsSchemas';
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
@@ -10,26 +9,21 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
         const { id } = await params;
         const body = await req.json();
-        const validated = creditRuleSchema.partial().parse(body);
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const db = supabaseAdmin as any;
-        const { data: rule, error } = await db
-            .from('credit_rules')
-            .update(validated)
-            .eq('id', id)
-            .select()
-            .single();
+
+        const { error } = await db
+            .from('platform_api_keys')
+            .update(body)
+            .eq('id', id);
 
         if (error) throw error;
 
-        return NextResponse.json({ success: true, rule });
+        return NextResponse.json({ success: true });
     } catch (error: any) {
-        console.error('API Error in update-rule:', error);
-        if (error.name === 'ZodError') {
-            return NextResponse.json({ error: 'Invalid request data', details: error.errors }, { status: 400 });
-        }
-        return NextResponse.json({ error: error.message || 'Failed to update credit rule' }, { status: 500 });
+        console.error('API Error in PATCH admin key:', error);
+        return NextResponse.json({ error: error.message || 'Failed to update key' }, { status: 500 });
     }
 }
 
@@ -42,8 +36,9 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const db = supabaseAdmin as any;
+
         const { error } = await db
-            .from('credit_rules')
+            .from('platform_api_keys')
             .delete()
             .eq('id', id);
 
@@ -51,7 +46,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
 
         return NextResponse.json({ success: true });
     } catch (error: any) {
-        console.error('API Error in delete-rule:', error);
-        return NextResponse.json({ error: error.message || 'Failed to delete credit rule' }, { status: 500 });
+        console.error('API Error in DELETE admin key:', error);
+        return NextResponse.json({ error: error.message || 'Failed to delete key' }, { status: 500 });
     }
 }

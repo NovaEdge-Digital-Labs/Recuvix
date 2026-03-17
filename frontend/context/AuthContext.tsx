@@ -61,7 +61,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 .select('*')
                 .eq('id', userId)
                 .single();
-            if (data) setProfile(data as UserProfile);
+            if (data) setProfile(data as unknown as UserProfile);
         } catch (e) {
             console.error('Failed to fetch profile:', e);
         }

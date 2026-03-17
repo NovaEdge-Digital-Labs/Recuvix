@@ -2,7 +2,8 @@ import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { Database } from '@/lib/supabase/database';
 
 export type BlogPost = Database['public']['Tables']['blog_posts']['Row'];
-export type ChangelogEntry = Database['public']['Tables']['changelog_entries']['Row'];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ChangelogEntry = any;
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
     const supabase = await createServerSupabaseClient();
@@ -36,7 +37,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
 
 export async function getChangelogEntries(): Promise<ChangelogEntry[]> {
     const supabase = await createServerSupabaseClient();
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
         .from('changelog_entries')
         .select('*')
         .order('date', { ascending: false });

@@ -37,7 +37,7 @@ export async function POST(req: Request) {
         // 2. Check member limit
         const members = await workspacesService.getMembers(workspaceId, supabase);
         const activeAndPendingCount = members.filter(m => ['active', 'pending'].includes(m.status)).length;
-        if (activeAndPendingCount >= workspace.max_members) {
+        if (activeAndPendingCount >= (workspace.max_members || Infinity)) {
             return NextResponse.json({ error: 'Member limit reached' }, { status: 400 });
         }
 

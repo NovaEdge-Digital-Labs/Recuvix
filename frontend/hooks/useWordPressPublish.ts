@@ -55,7 +55,8 @@ export function useWordPressPublish() {
         if (user) {
             wpConnectionsService.getAll(user.id)
                 .then(rows => {
-                    const mapped = rows.map(mapSupabaseToWPConnection);
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const mapped = rows.map((r: any) => mapSupabaseToWPConnection(r));
                     setConnections(mapped);
                     // Update local storage with fresh data
                     wpPublishHistoryManager.saveConnections(mapped);

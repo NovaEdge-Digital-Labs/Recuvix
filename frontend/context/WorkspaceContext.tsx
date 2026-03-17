@@ -3,11 +3,39 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
 import { useAuth } from './AuthContext';
 import { createClient } from '@/lib/supabase/client';
-import type { Database } from '@/lib/supabase/database';
 import { checkPermission, type Permission, type WorkspaceRole } from '@/lib/workspaces/permissionChecker';
 
-type Workspace = Database['public']['Tables']['workspaces']['Row'];
-type WorkspaceMember = Database['public']['Tables']['workspace_members']['Row'];
+// workspace tables are not in generated types yet — use local interfaces
+interface Workspace {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+    id: string;
+    name: string;
+    slug: string;
+    description: string | null;
+    logo_url: string | null;
+    owner_id: string;
+    plan: string;
+    plan_expires_at: string | null;
+    credits_balance: number;
+    max_members: number;
+    is_active: boolean;
+    active_workspace_id?: string | null;
+    settings: Record<string, unknown> | null;
+    created_at: string;
+    updated_at: string;
+    role?: WorkspaceRole;
+}
+interface WorkspaceMember {
+    id: string;
+    workspace_id: string;
+    user_id: string;
+    role: string;
+    status: string;
+    invited_by: string | null;
+    joined_at: string | null;
+    created_at: string;
+}
 
 type WorkspaceContextType = {
     workspaces: Workspace[];
@@ -126,7 +154,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
             if (error) throw error;
 
             setActiveWs(ws);
-            setActiveMembership(membership);
+            setActiveMembership(membership as unknown as WorkspaceMember);
 
             await (supabase.from('profiles') as any)
                 .update({ active_workspace_id: id })

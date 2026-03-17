@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabaseAdmin } from "@/lib/supabase/admin";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
     BarChart,
@@ -19,25 +18,26 @@ export function UsageTab() {
 
     useEffect(() => {
         const fetchStats = async () => {
-            // Simplified stats fetching
-            const { data: logs } = await (supabaseAdmin
-                .from('platform_key_usage_log')
-                .select('*')
-                .order('started_at', { ascending: false })
-                .limit(100) as any);
+            try {
+                const res = await fetch('/api/admin/usage-logs');
+                const { success, logs } = await res.json();
 
-            const totalReq = logs?.length || 0;
-            const successReq = logs?.filter((l: any) => l.status === 'success').length || 0;
-            const successRate = totalReq > 0 ? Math.round((successReq / totalReq) * 100) : 100;
+                const totalReq = logs?.length || 0;
+                const successReq = logs?.filter((l: any) => l.status === 'success').length || 0;
+                const successRate = totalReq > 0 ? Math.round((successReq / totalReq) * 100) : 100;
 
-            setStats({
-                totalRequests: 1420 + totalReq, // Faked base + real
-                totalTokens: "14.2M",
-                successRate: `${successRate}%`,
-                activeUsers: 48,
-                recentLogs: logs || []
-            });
-            setIsLoading(false);
+                setStats({
+                    totalRequests: 1420 + totalReq,
+                    totalTokens: "14.2M",
+                    successRate: `${successRate}%`,
+                    activeUsers: 48,
+                    recentLogs: logs || []
+                });
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         fetchStats();

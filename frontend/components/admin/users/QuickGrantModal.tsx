@@ -110,7 +110,7 @@ export const QuickGrantModal = ({ user, isOpen, onClose, onSuccess }: QuickGrant
 
                     <div className="space-y-2">
                         <Label className="text-zinc-400">Expiry</Label>
-                        <Select value={expiresInDays} onValueChange={setExpiresInDays}>
+                        <Select value={expiresInDays} onValueChange={(val: string | null) => setExpiresInDays(val ?? '0')}>
                             <SelectTrigger className="bg-zinc-950 border-zinc-900">
                                 <SelectValue placeholder="Select expiry" />
                             </SelectTrigger>

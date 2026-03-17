@@ -15,7 +15,9 @@ export async function POST(req: NextRequest) {
         const validated = grantSingleSchema.parse(body);
 
         // 1. Get user profile to check existence and current balance
-        const { data: profile, error: profileError } = await supabaseAdmin
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const db = supabaseAdmin as any;
+        const { data: profile, error: profileError } = await db
             .from('profiles')
             .select('email, credits_balance')
             .eq('id', validated.userId)

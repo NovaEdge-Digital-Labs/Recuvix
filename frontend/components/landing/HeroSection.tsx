@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 const Universe3D = dynamic(
     () => import('./Universe3D'),
@@ -67,12 +68,12 @@ export function HeroSection() {
                 </motion.p>
 
                 <motion.div className="hero-cta-row" variants={itemVariants}>
-                    <button className="btn-primary magnetic">
+                    <Link href="/signup" className="btn-primary magnetic inline-block text-center">
                         Generate Your First Blog →
-                    </button>
-                    <button className="btn-secondary">
+                    </Link>
+                    <a href="https://www.youtube.com/@novaedgedigitallabs" target="_blank" rel="noopener noreferrer" className="btn-secondary inline-block text-center">
                         Watch Demo ▶
-                    </button>
+                    </a>
                 </motion.div>
 
                 <motion.div className="hero-social-proof" variants={itemVariants}>

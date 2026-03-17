@@ -4,13 +4,13 @@ import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         const isAdmin = await checkAdminAuth();
         if (!isAdmin) return unauthorizedResponse();
 
-        const userId = params.id;
+        const { id: userId } = await params;
 
         // Fetch direct referrals
         const { data: referrals, error } = await (supabaseAdmin

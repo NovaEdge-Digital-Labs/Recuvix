@@ -23,8 +23,8 @@ const generateSchema = z.object({
 })
 
 async function getPlatformSetting(key: string) {
-    const { data } = await (supabaseAdmin
-        .from('platform_settings') as any)
+    const { data } = await (supabaseAdmin as any)
+        .from('platform_settings')
         .select('value')
         .eq('key', key)
         .single()
@@ -293,8 +293,8 @@ export async function POST(req: NextRequest) {
                     })
                 } finally {
                     // Record usage
-                    await (supabaseAdmin
-                        .from('platform_key_usage_log') as any)
+                    await (supabaseAdmin as any)
+                        .from('platform_key_usage_log')
                         .insert({
                             key_id: selectedKey.key_id,
                             user_id: user.id,
