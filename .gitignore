@@ -37,4 +37,5 @@ next-env.d.ts
 
 # skills.sh files
 .agent
-.agents
+.agents.env
+backend/.env
