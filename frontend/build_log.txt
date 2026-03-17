@@ -1,0 +1,675 @@
+
+> app-temp@0.1.0 build
+> NEXT_IGNORE_INCORRECT_LOCKFILE=1 next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./app/admin/login/page.tsx
+34:18  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/admin/auth/route.ts
+23:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/bulk/generate-single/route.ts
+32:43  Warning: 'keySource' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/api/calendar/settings/route.ts
+5:27  Warning: 'req' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/api/credits/balance/route.ts
+4:27  Warning: 'req' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/api/credits/create-order/route.ts
+4:24  Warning: 'CreditPackId' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/api/credits/webhook/route.ts
+32:19  Warning: 'notes' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/api/edit/improve-section/route.ts
+166:42  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/edit/regenerate-blog/route.ts
+27:13  Warning: 'secondaryKeywords' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+33:43  Warning: 'keySource' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+190:42  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/edit/regenerate-section/route.ts
+189:42  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/linking/analyse-library/route.ts
+9:7  Warning: 'jobs' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/api/linking/apply/route.ts
+28:40  Warning: 'baseUrl' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/api/titles/suggest/route.ts
+74:43  Warning: 'keySource' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+241:18  Warning: '_e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/api/voice/clean-transcript/route.ts
+169:23  Warning: 'updated' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/api/voice/generate-blog/route.ts
+46:30  Warning: 'outputFormat' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+47:13  Warning: 'authorDetails' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+52:43  Warning: 'keySource' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/api/voice/upload/route.ts
+28:15  Warning: 'speakerName' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+56:23  Warning: 'uploadData' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/api/voice/youtube/route.ts
+8:28  Warning: 'req' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/app/page.tsx
+14:25  Warning: 'Sparkles' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:10  Warning: 'useWorkspace' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/calendar/page.tsx
+4:23  Warning: 'CalendarView' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+30:9  Warning: 'isLoadingEntries' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+35:9  Warning: 'moveEntry' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/docs/guides/bulk-generation/page.tsx
+2:8  Warning: 'CodeBlock' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/docs/guides/managed-mode/page.tsx
+2:8  Warning: 'Callout' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/docs/guides/voice-to-blog/page.tsx
+2:8  Warning: 'Callout' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/generating/page.tsx
+18:13  Warning: 'lastOutput' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/layout.tsx
+1:15  Warning: 'Metadata' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/repurpose/page.tsx
+11:5  Warning: 'Sparkles' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/research/page.tsx
+106:18  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./app/status/page.tsx
+5:24  Warning: 'AlertCircle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/voice/history/page.tsx
+5:10  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/workspace/[slug]/credits/page.tsx
+7:10  Warning: 'Zap' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:21  Warning: 'ArrowLeft' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./app/workspace/[slug]/members/page.tsx
+31:8  Warning: React Hook useEffect has a missing dependency: 'fetchMembers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./app/workspace/[slug]/page.tsx
+12:5  Warning: 'ArrowUpRight' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+55:8  Warning: React Hook useEffect has a missing dependency: 'activeWorkspace'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./app/workspaces/page.tsx
+9:27  Warning: 'LayoutDashboard' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:8  Warning: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+18:12  Warning: 'isInvitationsLoading' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/admin/CreateTenantModal.tsx
+15:32  Warning: 'Check' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+27:11  Warning: 'supabase' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/admin/HealthCheckModal.tsx
+19:5  Warning: 'Loader2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:5  Warning: 'AlertTriangle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/admin/KeyCard.tsx
+12:5  Warning: 'XCircle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:5  Warning: 'AlertTriangle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/admin/KeysTab.tsx
+6:10  Warning: 'Card' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:16  Warning: 'CardContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:29  Warning: 'CardHeader' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:41  Warning: 'CardTitle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:5  Warning: 'RefreshCw' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+12:5  Warning: 'AlertCircle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/admin/SettingsTab.tsx
+13:5  Warning: 'Settings' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:5  Warning: 'Users' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/admin/UsageTab.tsx
+7:5  Warning: 'BarChart' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:5  Warning: 'Clock' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/admin/UsersTab.tsx
+5:16  Warning: 'CardContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:29  Warning: 'CardHeader' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:41  Warning: 'CardTitle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:10  Warning: 'Input' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+12:12  Warning: 'isLoading' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/admin/WhiteLabelTab.tsx
+8:5  Warning: 'ExternalLink' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:5  Warning: 'ShieldCheck' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:5  Warning: 'ShieldAlert' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:5  Warning: 'Loader2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+37:8  Warning: React Hook useEffect has a missing dependency: 'fetchTenants'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+108:31  Warning: 'onUpdate' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+118:29  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/api-reference/ApiSidebar.tsx
+6:18  Warning: 'Globe' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:25  Warning: 'ChevronRight' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/api-reference/ResponseViewer.tsx
+6:36  Warning: 'Wifi' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+6:42  Warning: 'WifiOff' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/api-reference/TryItPanel.tsx
+3:27  Warning: 'useEffect' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+45:18  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+55:18  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+113:38  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/auth/SignupForm.tsx
+14:13  Warning: 'isTenantMode' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/calendar/EntryDetailPanel.tsx
+7:25  Warning: 'CalendarEntryStatus' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+7:46  Warning: 'CalendarEntryPriority' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:10  Warning: 'X' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:46  Warning: 'Type' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:52  Warning: 'Tag' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/calendar/ExportModal.tsx
+51:18  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/calendar/ListView.tsx
+8:29  Warning: 'MoreHorizontal' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/calendar/MonthDayCell.tsx
+24:5  Warning: 'onDropEntry' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+31:11  Warning: 'past' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/calendar/MonthView.tsx
+46:41  Warning: 'i' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/calendar/QuickAddForm.tsx
+15:49  Warning: 'className' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/calendar/WeekDayColumn.tsx
+24:11  Warning: 'past' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/competitor/CompetitorInput.tsx
+188:37  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/credits/GenerationModeSelector.tsx
+4:10  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/docs/CodeBlock.tsx
+23:22  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/form/TopicInput.tsx
+32:11  Warning: 'debounceRef' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/history/HistoryBlogCard.tsx
+17:5  Warning: 'Share2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+112:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/history/HistoryQuickPanel.tsx
+14:10  Warning: 'Badge' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+93:49  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/landing/CustomCursor.tsx
+35:13  Warning: 'isHovering' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+72:15  Warning: 'hideCursors' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/landing/FinalCTA.tsx
+5:8  Warning: 'Link' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/landing/Universe3D.tsx
+301:43  Warning: 'i' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+333:17  Warning: 'clock' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/linking/ApplyLinksBar.tsx
+3:26  Warning: 'AlertTriangle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/linking/BlogAnalyserView.tsx
+18:9  Warning: 'isLoadingBlogs' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/linking/BlogSelector.tsx
+23:11  Warning: 'recent' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+24:11  Warning: 'rest' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/linking/InlineLinkSuggestions.tsx
+5:24  Warning: 'AlertTriangle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+19:8  Warning: React Hook useEffect has a missing dependency: 'engine'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/linking/LinkHealthCard.tsx
+9:5  Warning: 'ExternalLink' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/linking/LinkMapCanvas.tsx
+5:21  Warning: 'GraphNode' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:32  Warning: 'GraphEdge' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/linking/LinkMapView.tsx
+21:9  Warning: 'orphans' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/linking/LinkingPage.tsx
+35:8  Warning: React Hook useEffect has a missing dependency: 'engine'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/linking/LinkingQuickAccess.tsx
+3:36  Warning: 'LinkIcon' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:46  Warning: 'Sparkles' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'cn' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/linking/SuggestionCard.tsx
+4:26  Warning: 'SuggestionStatus' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/linking/SuggestionList.tsx
+4:10  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/multilingual/FontLoader.tsx
+10:13  Warning: Custom fonts not added in `pages/_document.js` will only load for a single page. This is discouraged. See: https://nextjs.org/docs/messages/no-page-custom-font  @next/next/no-page-custom-font
+
+./components/nav/UserAvatarMenu.tsx
+34:11  Warning: 'router' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/ContentViewer.tsx
+23:5  Warning: 'Clock' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/CustomInstructionInput.tsx
+5:10  Warning: 'cn' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/DownloadAllButton.tsx
+5:20  Warning: 'FileArchive' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/EmailOutput.tsx
+42:18  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/FormatCard.tsx
+53:5  Warning: 'onRegenerate' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/FormatSelector.tsx
+6:10  Warning: 'FormatStatus' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/GenericOutput.tsx
+50:18  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/LinkedInOutput.tsx
+42:18  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/RepurposeToolbar.tsx
+7:10  Warning: 'toast' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/ShareButtons.tsx
+8:5  Warning: 'Share2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+33:11  Warning: 'encodedText' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/TwitterThreadOutput.tsx
+43:18  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/repurpose/YouTubeScriptOutput.tsx
+39:18  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./components/research/ResearchInput.tsx
+31:11  Warning: 'debounceRef' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/results/ActionsPanel.tsx
+198:25  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/voice/AnalysisCard.tsx
+2:10  Warning: 'Sparkles' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/voice/AudioPlayback.tsx
+2:10  Warning: 'Play' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+2:16  Warning: 'Pause' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+2:23  Warning: 'RotateCcw' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+3:10  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:68  Warning: 'duration' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/voice/CleaningModal.tsx
+2:20  Warning: 'Zap' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:5  Warning: 'DialogFooter' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/voice/RecordTab.tsx
+2:15  Warning: 'Square' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+2:58  Warning: 'History' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:9  Warning: 'requestPermission' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/voice/TranscriptEditor.tsx
+1:25  Warning: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/voice/TranscriptionProgress.tsx
+2:10  Warning: 'Loader2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/voice/UploadTab.tsx
+1:17  Warning: 'useCallback' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'AudioPlayback' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/voice/VoicePage.tsx
+5:32  Warning: 'ArrowRight' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+22:13  Warning: 'user' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+26:12  Warning: 'showCleaningModal' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+30:9  Warning: 'uploadProgress' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+31:9  Warning: 'uploadStatus' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+35:9  Warning: 'isPolling' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/wl/DomainSettings.tsx
+25:8  Warning: React Hook useEffect has a missing dependency: 'fetchVerification'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/wl/PartnerSettings.tsx
+10:25  Warning: 'Layout' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/wl/TenantNavLogo.tsx
+6:8  Warning: 'Image' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/wordpress/WordPressPublishModal.tsx
+111:41  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/workspaces/ApprovalActions.tsx
+8:5  Warning: 'MessageSquare' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+21:35  Warning: 'blogId' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+22:18  Warning: 'activeRole' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/workspaces/BrandAssetsPanel.tsx
+12:5  Warning: 'Facebook' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:5  Warning: 'Youtube' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+23:46  Warning: 'CardFooter' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+27:10  Warning: 'Select' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+27:18  Warning: 'SelectContent' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+27:33  Warning: 'SelectItem' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+27:45  Warning: 'SelectTrigger' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+27:60  Warning: 'SelectValue' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/workspaces/InviteMemberModal.tsx
+47:30  Warning: 'refreshWorkspaces' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/workspaces/MembersTable.tsx
+3:17  Warning: 'useState' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+20:34  Warning: 'AvatarImage' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+42:13  Warning: 'activeRole' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/workspaces/PendingInvitationCard.tsx
+5:10  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+5:18  Warning: 'AvatarFallback' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/workspaces/WorkspaceActivityFeed.tsx
+15:10  Warning: 'Avatar' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:18  Warning: 'AvatarFallback' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+15:34  Warning: 'AvatarImage' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/workspaces/WorkspaceBanner.tsx
+6:5  Warning: 'Users' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+9:5  Warning: 'AlertCircle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/workspaces/WorkspaceCreditsPanel.tsx
+7:5  Warning: 'BarChart3' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+8:5  Warning: 'ArrowUpRight' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+13:10  Warning: 'Button' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+44:8  Warning: React Hook useEffect has a missing dependency: 'activeWorkspace'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/workspaces/WorkspaceSettingsForm.tsx
+9:5  Warning: 'Settings' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+10:5  Warning: 'Trash2' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+11:5  Warning: 'AlertTriangle' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./components/workspaces/WorkspaceSwitcher.tsx
+19:5  Warning: 'Users' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./lib/calendar/calendarService.ts
+2:10  Warning: 'PostgrestResponse' is defined but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./lib/calendar/dateHelpers.ts
+21:11  Warning: 'lastDayOfMonth' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./lib/landing/threeScenes.ts
+122:19  Warning: 'initialY' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./lib/voice/audioChunker.ts
+83:15  Warning: 'timeOffset' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+./lib/voice/transcriptDiffer.ts
+15:11  Warning: 'oldWords' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+16:11  Warning: 'newWords' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+18:11  Warning: 'diff' is assigned a value but never used. Allowed unused vars must match /^_/u.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/143) ...
+Calendar Export Error: n [Error]: Dynamic server usage: Route /api/calendar/export couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/chunks/916.js:1:37219)
+    at f (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/chunks/6888.js:1:1758)
+    at o (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/app/api/account/delete/route.js:1:1763)
+    at l (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/app/api/calendar/export/route.js:1:942)
+    at /home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38417
+    at /home/amit/Development/Ai-powerd-blog/node_modules/next/dist/server/lib/trace/tracer.js:140:36
+    at NoopContextManager.with (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)
+    at ContextAPI.with (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)
+    at NoopTracer.startActiveSpan (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18093)
+    at ProxyTracer.startActiveSpan (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18854) {
+  description: "Route /api/calendar/export couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Balance fetch error: n [Error]: Dynamic server usage: Route /api/credits/balance couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/chunks/916.js:1:37219)
+    at f (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/chunks/6888.js:1:1758)
+    at i (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/app/api/calendar/settings/route.js:1:3330)
+    at d (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/app/api/credits/balance/route.js:1:831)
+    at /home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38417
+    at /home/amit/Development/Ai-powerd-blog/node_modules/next/dist/server/lib/trace/tracer.js:140:36
+    at NoopContextManager.with (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)
+    at ContextAPI.with (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)
+    at NoopTracer.startActiveSpan (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18093)
+    at ProxyTracer.startActiveSpan (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18854) {
+  description: "Route /api/credits/balance couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Get Graph Error: n [Error]: Dynamic server usage: Route /api/linking/graph couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/chunks/916.js:1:37219)
+    at f (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/chunks/6888.js:1:1758)
+    at n (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/app/api/calendar/bulk-create/route.js:1:3498)
+    at u (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/app/api/linking/graph/route.js:1:831)
+    at /home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38417
+    at /home/amit/Development/Ai-powerd-blog/node_modules/next/dist/server/lib/trace/tracer.js:140:36
+    at NoopContextManager.with (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)
+    at ContextAPI.with (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)
+    at NoopTracer.startActiveSpan (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18093)
+    at ProxyTracer.startActiveSpan (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18854) {
+  description: "Route /api/linking/graph couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (35/143) 
+WL Stats API Error: B [Error]: Dynamic server usage: Route /api/wl/stats couldn't be rendered statically because it used `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at V (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:21778)
+    at Object.get (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:29465)
+    at l (/home/amit/Development/Ai-powerd-blog/frontend/.next/server/app/api/wl/stats/route.js:1:540)
+    at /home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/next-server/app-route.runtime.prod.js:6:38417
+    at /home/amit/Development/Ai-powerd-blog/node_modules/next/dist/server/lib/trace/tracer.js:140:36
+    at NoopContextManager.with (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)
+    at ContextAPI.with (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)
+    at NoopTracer.startActiveSpan (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18093)
+    at ProxyTracer.startActiveSpan (/home/amit/Development/Ai-powerd-blog/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18854)
+    at /home/amit/Development/Ai-powerd-blog/node_modules/next/dist/server/lib/trace/tracer.js:122:103 {
+  description: "Route /api/wl/stats couldn't be rendered statically because it used `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (71/143) 
+   Generating static pages (107/143) 
+ ✓ Generating static pages (143/143)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                               Size     First Load JS
+┌ ƒ /                                     182 B           114 kB
+├ ƒ /_not-found                           880 B          88.6 kB
+├ ƒ /admin                                140 kB          393 kB
+├ ƒ /admin/login                          6.35 kB         108 kB
+├ ƒ /api-docs                             173 B          87.9 kB
+├ ƒ /api/account/delete                   0 B                0 B
+├ ƒ /api/admin/auth                       0 B                0 B
+├ ƒ /api/admin/wl/tenants                 0 B                0 B
+├ ƒ /api/bulk/generate-single             0 B                0 B
+├ ƒ /api/calendar/bulk-create             0 B                0 B
+├ ƒ /api/calendar/entries                 0 B                0 B
+├ ƒ /api/calendar/entries/[id]            0 B                0 B
+├ ƒ /api/calendar/export                  0 B                0 B
+├ ƒ /api/calendar/settings                0 B                0 B
+├ ƒ /api/calendar/suggestions             0 B                0 B
+├ ƒ /api/competitor/analyze               0 B                0 B
+├ ƒ /api/competitor/brief                 0 B                0 B
+├ ƒ /api/competitor/scrape                0 B                0 B
+├ ƒ /api/contact                          0 B                0 B
+├ ƒ /api/credits/balance                  0 B                0 B
+├ ƒ /api/credits/create-order             0 B                0 B
+├ ƒ /api/credits/deduct                   0 B                0 B
+├ ƒ /api/credits/verify-payment           0 B                0 B
+├ ƒ /api/credits/webhook                  0 B                0 B
+├ ƒ /api/edit/improve-section             0 B                0 B
+├ ƒ /api/edit/regenerate-blog             0 B                0 B
+├ ƒ /api/edit/regenerate-section          0 B                0 B
+├ ƒ /api/export/package                   0 B                0 B
+├ ƒ /api/images/generate                  0 B                0 B
+├ ƒ /api/images/stock                     0 B                0 B
+├ ƒ /api/linking/analyse                  0 B                0 B
+├ ƒ /api/linking/analyse-library          0 B                0 B
+├ ƒ /api/linking/apply                    0 B                0 B
+├ ƒ /api/linking/graph                    0 B                0 B
+├ ƒ /api/linking/remove                   0 B                0 B
+├ ƒ /api/linking/suggestions              0 B                0 B
+├ ƒ /api/managed/availability             0 B                0 B
+├ ƒ /api/managed/generate                 0 B                0 B
+├ ƒ /api/multilingual/generate-version    0 B                0 B
+├ ƒ /api/outline/generate                 0 B                0 B
+├ ƒ /api/profile/update                   0 B                0 B
+├ ƒ /api/profile/update-mode              0 B                0 B
+├ ƒ /api/repurpose/save                   0 B                0 B
+├ ƒ /api/repurpose/update                 0 B                0 B
+├ ƒ /api/research/dataforseo              0 B                0 B
+├ ƒ /api/research/topics                  0 B                0 B
+├ ƒ /api/seo/meta                         0 B                0 B
+├ ƒ /api/thumbnail/generate               0 B                0 B
+├ ƒ /api/titles/suggest                   0 B                0 B
+├ ƒ /api/tracker/analyze                  0 B                0 B
+├ ƒ /api/tracker/gsc/auth-url             0 B                0 B
+├ ƒ /api/tracker/gsc/exchange-token       0 B                0 B
+├ ƒ /api/tracker/gsc/keywords             0 B                0 B
+├ ƒ /api/tracker/gsc/performance          0 B                0 B
+├ ƒ /api/tracker/gsc/refresh-token        0 B                0 B
+├ ƒ /api/tracker/gsc/sites                0 B                0 B
+├ ƒ /api/upload/assets                    0 B                0 B
+├ ƒ /api/voice/clean-transcript           0 B                0 B
+├ ƒ /api/voice/generate-blog              0 B                0 B
+├ ƒ /api/voice/status/[recordingId]       0 B                0 B
+├ ƒ /api/voice/transcribe                 0 B                0 B
+├ ƒ /api/voice/upload                     0 B                0 B
+├ ƒ /api/voice/youtube                    0 B                0 B
+├ ƒ /api/wl/stats                         0 B                0 B
+├ ƒ /api/wl/verify-domain                 0 B                0 B
+├ ƒ /api/wordpress/fetch-metadata         0 B                0 B
+├ ƒ /api/wordpress/publish                0 B                0 B
+├ ƒ /api/wordpress/test-connection        0 B                0 B
+├ ƒ /api/wordpress/upload-image           0 B                0 B
+├ ƒ /api/workspaces/accept-invite         0 B                0 B
+├ ƒ /api/workspaces/buy-credits           0 B                0 B
+├ ƒ /api/workspaces/create                0 B                0 B
+├ ƒ /api/workspaces/delete                0 B                0 B
+├ ƒ /api/workspaces/invite                0 B                0 B
+├ ƒ /api/workspaces/leave                 0 B                0 B
+├ ƒ /api/workspaces/remove-member         0 B                0 B
+├ ƒ /api/workspaces/transfer-ownership    0 B                0 B
+├ ƒ /api/workspaces/update-member         0 B                0 B
+├ ƒ /api/workspaces/update-settings       0 B                0 B
+├ ƒ /app                                  40.5 kB         355 kB
+├ ƒ /auth/callback                        0 B                0 B
+├ ƒ /blog                                 173 B          87.9 kB
+├ ƒ /bulk                                 19.9 kB         277 kB
+├ ƒ /calendar                             20.8 kB         266 kB
+├ ƒ /changelog                            173 B          87.9 kB
+├ ƒ /competitor                           16.4 kB         320 kB
+├ ƒ /contact                              1.77 kB         110 kB
+├ ƒ /docs                                 194 B           108 kB
+├ ƒ /docs/api/authentication              1.59 kB         395 kB
+├ ƒ /docs/api/endpoints                   241 B           108 kB
+├ ƒ /docs/api/endpoints/blog/generate     151 B           450 kB
+├ ƒ /docs/api/endpoints/outline/generate  152 B           450 kB
+├ ƒ /docs/api/endpoints/seo/meta          151 B           450 kB
+├ ƒ /docs/api/endpoints/titles/suggest    151 B           450 kB
+├ ƒ /docs/api/endpoints/voice/transcribe  152 B           450 kB
+├ ƒ /docs/api/errors                      975 B           414 kB
+├ ƒ /docs/api/overview                    1.6 kB          403 kB
+├ ƒ /docs/api/rate-limits                 241 B           108 kB
+├ ƒ /docs/changelog                       241 B           108 kB
+├ ƒ /docs/concepts                        241 B           108 kB
+├ ƒ /docs/faq                             1.86 kB         110 kB
+├ ƒ /docs/guides/billing                  241 B           108 kB
+├ ƒ /docs/guides/blog-generation          1.15 kB         415 kB
+├ ƒ /docs/guides/bulk-generation          241 B           108 kB
+├ ƒ /docs/guides/byok                     530 B           109 kB
+├ ƒ /docs/guides/calendar                 241 B           108 kB
+├ ƒ /docs/guides/competitor               241 B           108 kB
+├ ƒ /docs/guides/internal-linking         241 B           108 kB
+├ ƒ /docs/guides/managed-mode             241 B           108 kB
+├ ƒ /docs/guides/multilingual             241 B           108 kB
+├ ƒ /docs/guides/repurposing              241 B           108 kB
+├ ƒ /docs/guides/seo-meta                 241 B           108 kB
+├ ƒ /docs/guides/thumbnails               241 B           108 kB
+├ ƒ /docs/guides/tracker                  241 B           108 kB
+├ ƒ /docs/guides/voice-to-blog            241 B           108 kB
+├ ƒ /docs/guides/white-label              241 B           108 kB
+├ ƒ /docs/guides/wordpress                241 B           108 kB
+├ ƒ /docs/guides/workspaces               241 B           108 kB
+├ ƒ /docs/quickstart                      984 B           414 kB
+├ ƒ /forgot-password                      2.19 kB         155 kB
+├ ƒ /generating                           25.4 kB         323 kB
+├ ƒ /history                              244 B           321 kB
+├ ƒ /landing                              182 B           114 kB
+├ ƒ /linking                              37.4 kB         268 kB
+├ ƒ /login                                1.85 kB         158 kB
+├ ƒ /multilingual                         18 kB           226 kB
+├ ƒ /onboarding                           8.36 kB         110 kB
+├ ƒ /partner                              8.92 kB         164 kB
+├ ƒ /partner/settings                     9.84 kB         189 kB
+├ ƒ /pricing                              14.8 kB         191 kB
+├ ƒ /privacy                              173 B          87.9 kB
+├ ƒ /profile                              9.73 kB         320 kB
+├ ƒ /repurpose                            22.5 kB         241 kB
+├ ƒ /research                             20 kB           339 kB
+├ ƒ /reset-password                       2.74 kB         147 kB
+├ ƒ /results                              22.5 kB         396 kB
+├ ƒ /signup                               3.13 kB         159 kB
+├ ƒ /status                               2.89 kB         103 kB
+├ ƒ /terms                                3.41 kB         102 kB
+├ ƒ /tracker                              126 kB          455 kB
+├ ƒ /tracker/callback                     8.44 kB         164 kB
+├ ƒ /use-cases/agencies                   173 B          87.9 kB
+├ ƒ /use-cases/bloggers                   173 B          87.9 kB
+├ ƒ /use-cases/coaches                    173 B          87.9 kB
+├ ƒ /use-cases/ecommerce                  173 B          87.9 kB
+├ ƒ /use-cases/podcasters                 173 B          87.9 kB
+├ ƒ /voice                                15.2 kB         251 kB
+├ ƒ /voice/history                        2.6 kB          110 kB
+├ ƒ /workspace/[slug]                     8.77 kB         177 kB
+├ ƒ /workspace/[slug]/blogs               1.36 kB         322 kB
+├ ƒ /workspace/[slug]/brand               6.77 kB         230 kB
+├ ƒ /workspace/[slug]/credits             8.29 kB         179 kB
+├ ƒ /workspace/[slug]/members             7.86 kB         293 kB
+├ ƒ /workspace/[slug]/settings            4.23 kB         246 kB
+└ ƒ /workspaces                           8.88 kB         222 kB
++ First Load JS shared by all             87.7 kB
+  ├ chunks/2364-305178ee28cffec1.js       31.9 kB
+  ├ chunks/618f8807-1ebf21bf8d453989.js   53.6 kB
+  └ other shared chunks (total)           2.17 kB
+
+
+ƒ Middleware                              75.6 kB
+
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -1,0 +1,45 @@
+{
+    "framework": "nextjs",
+    "buildCommand": "npm run build",
+    "devCommand": "npm run dev",
+    "installCommand": "npm install",
+    "regions": [
+        "bom1"
+    ],
+    "functions": {
+        "app/api/voice/transcribe/route.ts": {
+            "maxDuration": 120
+        },
+        "app/api/linking/analyse-library/route.ts": {
+            "maxDuration": 60
+        },
+        "app/api/bulk/generate-single/route.ts": {
+            "maxDuration": 60
+        }
+    },
+    "headers": [
+        {
+            "source": "/api/(.*)",
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "https://recuvix.in"
+                }
+            ]
+        }
+    ],
+    "crons": [
+        {
+            "path": "/api/cron/expire-credits",
+            "schedule": "0 2 * * *"
+        },
+        {
+            "path": "/api/cron/mark-missed-calendar",
+            "schedule": "0 0 * * *"
+        },
+        {
+            "path": "/api/cron/cleanup-voice-audio",
+            "schedule": "0 3 * * *"
+        }
+    ]
+}

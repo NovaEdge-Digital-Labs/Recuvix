@@ -1,0 +1,41 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -r tsconfig-paths/register src/server.ts",
+    "build": "tsc -b",
+    "start": "node dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/archiver": "^7.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/highlight.js": "^9.12.4",
+    "@types/marked": "^5.0.2",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^20.19.37",
+    "@types/turndown": "^5.0.6",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^3.15.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "canvas": "3.1.0",
+    "cloudinary": "^2.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "multer": "^2.1.1",
+    "node-vibrant": "^3.2.1-alpha.1",
+    "replicate": "^1.1.0",
+    "sharp": "^0.33.5",
+    "zod": "^3.24.2"
+  }
+}
