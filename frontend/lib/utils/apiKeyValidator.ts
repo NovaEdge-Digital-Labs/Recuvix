@@ -9,6 +9,7 @@ export const API_KEY_PATTERNS: Record<string, { prefix: string; minLength: numbe
     openai: { prefix: 'sk-', minLength: 30 },
     gemini: { prefix: 'AIzaSy', minLength: 30 },
     grok: { prefix: 'xai-', minLength: 20 },
+    openrouter: { prefix: 'sk-or-', minLength: 30 },
 };
 
 /**
@@ -56,6 +57,13 @@ export function validateGrokKey(key: string): boolean {
 }
 
 /**
+ * Validates an OpenRouter key.
+ */
+export function validateOpenRouterKey(key: string): boolean {
+    return key.startsWith('sk-or-') && key.length >= 30;
+}
+
+/**
  * Dispatches to the correct provider validator.
  */
 export function validateProviderKey(provider: string, key: string): boolean {
@@ -64,6 +72,7 @@ export function validateProviderKey(provider: string, key: string): boolean {
         case 'claude': return validateClaudeKey(key);
         case 'gemini': return validateGeminiKey(key);
         case 'grok': return validateGrokKey(key);
+        case 'openrouter': return validateOpenRouterKey(key);
         default: return validateApiKeyFormat(provider, key);
     }
 }

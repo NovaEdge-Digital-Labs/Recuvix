@@ -44,13 +44,28 @@ ALTER TABLE public.profiles
 ALTER TABLE public.referrals ENABLE ROW LEVEL SECURITY;
 
 -- Policies for referrals
-CREATE POLICY "Users can view their own referrals as referrer"
-  ON public.referrals FOR SELECT
-  USING (auth.uid() = referrer_user_id);
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies 
+        WHERE tablename = 'referrals' 
+        AND policyname = 'Users can view their own referrals as referrer'
+    ) THEN
+        CREATE POLICY "Users can view their own referrals as referrer"
+          ON public.referrals FOR SELECT
+          USING (auth.uid() = referrer_user_id);
+    END IF;
 
-CREATE POLICY "Users can view their own referral record as referred user"
-  ON public.referrals FOR SELECT
-  USING (auth.uid() = referred_user_id);
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies 
+        WHERE tablename = 'referrals' 
+        AND policyname = 'Users can view their own referral record as referred user'
+    ) THEN
+        CREATE POLICY "Users can view their own referral record as referred user"
+          ON public.referrals FOR SELECT
+          USING (auth.uid() = referred_user_id);
+    END IF;
+END $$;
 
 -- Helper functions for referrals
 CREATE OR REPLACE FUNCTION public.increment_total_referrals(p_user_id uuid)

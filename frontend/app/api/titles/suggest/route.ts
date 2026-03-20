@@ -185,6 +185,23 @@ Respond ONLY with valid JSON array. No markdown, no explanation, no code fences.
                     messages: [{ role: "user", content: prompt }],
                 }),
             });
+        } else if (llmProvider === "openrouter") {
+            modelName = "openai/gpt-4o";
+            response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${apiKey}`,
+                    "HTTP-Referer": "https://recuvix.com",
+                    "X-OpenRouter-Title": "Recuvix",
+                },
+                body: JSON.stringify({
+                    model: modelName,
+                    max_tokens: 1200,
+                    stream: false,
+                    messages: [{ role: "user", content: prompt }],
+                }),
+            });
         } else {
             throw new Error("Unsupported LLM provider");
         }
@@ -206,7 +223,7 @@ Respond ONLY with valid JSON array. No markdown, no explanation, no code fences.
         try {
             if (llmProvider === "claude") {
                 resultText = data.content[0].text;
-            } else if (llmProvider === "openai" || llmProvider === "grok") {
+            } else if (llmProvider === "openai" || llmProvider === "grok" || llmProvider === "openrouter") {
                 resultText = data.choices[0].message.content;
             } else if (llmProvider === "gemini") {
                 resultText = data.candidates[0].content.parts[0].text;

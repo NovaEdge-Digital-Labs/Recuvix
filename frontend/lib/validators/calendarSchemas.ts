@@ -44,7 +44,7 @@ export const calendarSettingsSchema = z.object({
 });
 
 export const calendarSuggestionsRequestSchema = z.object({
-    llmProvider: z.enum(['claude', 'openai', 'gemini', 'grok']),
+    llmProvider: z.enum(['claude', 'openai', 'gemini', 'grok', 'openrouter']),
     apiKey: z.string(),
     month: z.number().int().min(1).max(12),
     year: z.number().int().min(2020),

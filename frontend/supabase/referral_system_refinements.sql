@@ -16,13 +16,28 @@ CREATE INDEX IF NOT EXISTS notifications_unread_idx ON public.notifications(user
 -- RLS for Notifications
 ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Users can view their own notifications"
-  ON public.notifications FOR SELECT
-  USING (auth.uid() = user_id);
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies 
+        WHERE tablename = 'notifications' 
+        AND policyname = 'Users can view their own notifications'
+    ) THEN
+        CREATE POLICY "Users can view their own notifications"
+          ON public.notifications FOR SELECT
+          USING (auth.uid() = user_id);
+    END IF;
 
-CREATE POLICY "Users can update their own notifications"
-  ON public.notifications FOR UPDATE
-  USING (auth.uid() = user_id);
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies 
+        WHERE tablename = 'notifications' 
+        AND policyname = 'Users can update their own notifications'
+    ) THEN
+        CREATE POLICY "Users can update their own notifications"
+          ON public.notifications FOR UPDATE
+          USING (auth.uid() = user_id);
+    END IF;
+END $$;
 
 -- Ensure profiles has the correct columns (in case original migration skipped some)
 ALTER TABLE public.profiles

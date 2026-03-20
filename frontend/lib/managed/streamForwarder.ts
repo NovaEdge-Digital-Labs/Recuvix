@@ -3,6 +3,7 @@ import {
     streamFromOpenAI,
     streamFromGemini,
     streamFromGrok,
+    streamFromOpenRouter,
     TokenUsage
 } from './providerClients'
 
@@ -46,7 +47,8 @@ export async function forwardLLMStream(
     const streamFn = provider === 'claude' ? streamFromClaude :
         provider === 'openai' ? streamFromOpenAI :
             provider === 'gemini' ? streamFromGemini :
-                streamFromGrok
+                provider === 'openrouter' ? streamFromOpenRouter :
+                    streamFromGrok
 
     await streamFn(
         apiKey,

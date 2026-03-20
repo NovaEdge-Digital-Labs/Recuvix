@@ -30,7 +30,7 @@ export const scrapedDataSchema = z.object({
 });
 
 export const analyzeRequestSchema = z.object({
-    llmProvider: z.enum(['claude', 'openai', 'gemini', 'grok']),
+    llmProvider: z.enum(['claude', 'openai', 'gemini', 'grok', 'openrouter']),
     apiKey: z.string().min(1),
     scrapeData: scrapedDataSchema,
     targetCountry: z.string(),
@@ -60,7 +60,7 @@ export const analysisResponseSchema = z.object({
 });
 
 export const briefRequestSchema = z.object({
-    llmProvider: z.enum(['claude', 'openai', 'gemini', 'grok']),
+    llmProvider: z.enum(['claude', 'openai', 'gemini', 'grok', 'openrouter']),
     apiKey: z.string().min(1),
     scrapeData: scrapedDataSchema,
     analysis: analysisResponseSchema,

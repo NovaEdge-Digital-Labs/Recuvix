@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { chunkAudioFile, transcribeChunks } from '@/lib/voice/audioChunker';
 import { checkRateLimit } from '@/lib/utils/rateLimiter';
 
@@ -10,13 +11,30 @@ import { checkRateLimit } from '@/lib/utils/rateLimiter';
 
 export async function POST(req: NextRequest) {
     try {
-        const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(
-            req.headers.get('Authorization')?.split(' ')[1] || ''
-        );
+        const supabase = await createServerSupabaseClient();
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
 
         if (authError || !user) {
+            // Fallback for manual token
+            const token = req.headers.get('Authorization')?.split(' ')[1];
+            if (token) {
+                const { data: { user: fallbackUser }, error: fallbackError } = await supabaseAdmin.auth.getUser(token);
+                if (!fallbackError && fallbackUser) {
+                    return proceedWithTranscribe(req, fallbackUser);
+                }
+            }
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
+
+        return proceedWithTranscribe(req, user);
+    } catch (error: any) {
+        console.error('Transcription API Error:', error);
+        return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+    }
+}
+
+async function proceedWithTranscribe(req: NextRequest, user: any) {
+    try {
 
         // Rate limit: 5 transcriptions per hour per user
         if (!checkRateLimit(user.id, 'voice_transcribe', 5, 3600000)) {

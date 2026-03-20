@@ -57,7 +57,7 @@ export const bulkTopicSchema = z.object({
 });
 
 export const bulkGenerateSingleSchema = z.object({
-    llmProvider: z.enum(["claude", "openai", "gemini", "grok"]),
+    llmProvider: z.enum(["claude", "openai", "gemini", "grok", "openrouter"]),
     apiKey: z.string().min(1),
     topic: bulkTopicSchema,
     settings: bulkSettingsSchema,

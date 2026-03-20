@@ -366,6 +366,7 @@ end;
 $$ language plpgsql security definer;
 
 -- updated_at triggers
+drop trigger if exists set_wl_tenants_updated_at on public.wl_tenants;
 create trigger set_wl_tenants_updated_at
   before update on public.wl_tenants
   for each row execute procedure

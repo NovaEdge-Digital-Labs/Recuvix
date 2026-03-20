@@ -7,6 +7,8 @@ exports.thumbnailSchema = zod_1.z.object({
     blogTitle: zod_1.z.string().min(1, 'Blog title is required').max(120),
     writerName: zod_1.z.string().min(1, 'Writer name is required').max(50),
     websiteUrl: zod_1.z.string().min(1, 'Website URL is required').max(100),
+    companyName: zod_1.z.string().max(50).optional().default(''),
     fallbackBgColor: zod_1.z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid hex color').optional().default('#1a1a2e'),
     country: zod_1.z.string().toLowerCase().default('usa'),
+    backgroundImageUrl: zod_1.z.string().url().optional(),
 });

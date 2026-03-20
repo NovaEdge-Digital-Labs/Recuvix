@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const outlineGenerateSchema = z.object({
-    llmProvider: z.enum(["claude", "openai", "gemini", "grok"]),
+    llmProvider: z.enum(["claude", "openai", "gemini", "grok", "openrouter"]),
     apiKey: z.string().min(1, "API key is required"),
     topic: z.string().min(3, "Topic must be at least 3 characters"),
     country: z.string().min(2, "Country is required"),

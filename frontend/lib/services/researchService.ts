@@ -119,6 +119,20 @@ Generate all ${count} topics now.
                     messages: [{ role: "user", content: researchPrompt }],
                 }),
             });
+        } else if (llmProvider === "openrouter") {
+            response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${apiKey}`,
+                    "HTTP-Referer": "https://recuvix.com",
+                    "X-OpenRouter-Title": "Recuvix",
+                },
+                body: JSON.stringify({
+                    model: "openai/gpt-4o",
+                    messages: [{ role: "user", content: researchPrompt }],
+                }),
+            });
         } else {
             throw new Error("Unsupported LLM provider");
         }
@@ -139,7 +153,7 @@ Generate all ${count} topics now.
         try {
             if (llmProvider === "claude") {
                 resultText = data.content[0].text;
-            } else if (llmProvider === "openai" || llmProvider === "grok") {
+            } else if (llmProvider === "openai" || llmProvider === "grok" || llmProvider === "openrouter") {
                 resultText = data.choices[0].message.content;
             } else if (llmProvider === "gemini") {
                 resultText = data.candidates[0].content.parts[0].text;

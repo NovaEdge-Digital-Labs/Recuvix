@@ -171,6 +171,24 @@ export async function POST(request: Request) {
                 if (!resp.ok) throw new Error(`Grok API error: ${resp.status}`);
                 const data = await resp.json();
                 blogHtml = data.choices[0].message.content;
+            } else if (llmProvider === "openrouter") {
+                const resp = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${apiKey}`,
+                        "Content-Type": "application/json",
+                        "HTTP-Referer": "https://recuvix.com",
+                        "X-OpenRouter-Title": "Recuvix",
+                    },
+                    body: JSON.stringify({
+                        model: "google/gemini-2.0-flash-001",
+                        messages: [{ role: "user", content: prompt }],
+                        max_tokens: 4000,
+                    }),
+                });
+                if (!resp.ok) throw new Error(`OpenRouter API error: ${resp.status}`);
+                const data = await resp.json();
+                blogHtml = data.choices[0].message.content;
             }
         } catch (llmError: any) {
             if (session && !result.data.apiKey) {

@@ -36,10 +36,27 @@ ALTER TABLE public.newsletter_subscribers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.newsletter_sends ENABLE ROW LEVEL SECURITY;
 
 -- Only service role can manage these for now to keep it simple and secure
-CREATE POLICY "Allow service role all access" ON public.newsletter_subscribers
-    USING (true)
-    WITH CHECK (true);
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies 
+        WHERE tablename = 'newsletter_subscribers' 
+        AND policyname = 'Allow service role all access'
+    ) THEN
+        CREATE POLICY "Allow service role all access" ON public.newsletter_subscribers
+            FOR ALL
+            USING (true)
+            WITH CHECK (true);
+    END IF;
 
-CREATE POLICY "Allow service role all access sends" ON public.newsletter_sends
-    USING (true)
-    WITH CHECK (true);
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies 
+        WHERE tablename = 'newsletter_sends' 
+        AND policyname = 'Allow service role all access sends'
+    ) THEN
+        CREATE POLICY "Allow service role all access sends" ON public.newsletter_sends
+            FOR ALL
+            USING (true)
+            WITH CHECK (true);
+    END IF;
+END $$;

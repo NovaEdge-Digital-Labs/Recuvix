@@ -111,6 +111,27 @@ export async function streamPlatformLLM({
                 stream: true,
             }),
         })
+    } else if (provider === 'openrouter') {
+        const messages = []
+        if (systemInstruction) {
+            messages.push({ role: 'system', content: systemInstruction })
+        }
+        messages.push({ role: 'user', content: prompt })
+
+        response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${apiKey}`,
+                'HTTP-Referer': 'https://recuvix.ai',
+                'X-Title': 'Recuvix',
+            },
+            body: JSON.stringify({
+                model: 'anthropic/claude-3.5-sonnet',
+                messages,
+                stream: true,
+            }),
+        })
     } else {
         throw new Error('Invalid provider')
     }
@@ -150,7 +171,7 @@ export async function streamPlatformLLM({
                         if (data.type === 'content_block_delta' && data.delta?.text) {
                             chunkText = data.delta.text
                         }
-                    } else if (provider === 'openai' || provider === 'grok') {
+                    } else if (provider === 'openai' || provider === 'grok' || provider === 'openrouter') {
                         if (data.choices?.[0]?.delta?.content) {
                             chunkText = data.choices[0].delta.content
                         }

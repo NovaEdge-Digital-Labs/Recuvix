@@ -57,6 +57,13 @@ export function useLinkingEngine(workspaceId?: string) {
             // We can use a shared API for blogs or build a specific one if needed.
             // For now, let's assume we fetch them and build a simple list.
             const res = await fetch(`/api/blogs?workspaceId=${workspaceId || ''}`);
+            if (!res.ok) {
+                if (res.status === 404) {
+                    setAllBlogs([]);
+                    return;
+                }
+                throw new Error(`Blogs API failed: ${res.status}`);
+            }
             const data = await res.json();
             if (data.blogs) {
                 setAllBlogs(data.blogs);
@@ -134,6 +141,11 @@ export function useLinkingEngine(workspaceId?: string) {
                     updates: pendingIds.map(id => ({ suggestionId: id, status: 'approved' }))
                 }),
             });
+
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(`Approve failed: ${res.status} ${text.substring(0, 50)}`);
+            }
             const data = await res.json();
             if (data.error) throw new Error(data.error);
 

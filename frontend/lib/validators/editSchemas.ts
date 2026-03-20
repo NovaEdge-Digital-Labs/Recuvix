@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const llmProviderSchema = z.enum(["claude", "openai", "gemini", "grok"]);
+export const llmProviderSchema = z.enum(["claude", "openai", "gemini", "grok", "openrouter"]);
 
 export const regenerateBlogSchema = z.object({
     llmProvider: llmProviderSchema,

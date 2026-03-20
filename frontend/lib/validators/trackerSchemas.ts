@@ -33,7 +33,7 @@ export const GSCKeywordsSchema = GSCBaseSchema.extend({
 });
 
 export const TrackerAnalyzeSchema = z.object({
-    llmProvider: z.enum(["claude", "openai", "gemini", "grok"]),
+    llmProvider: z.enum(["claude", "openai", "gemini", "grok", "openrouter"]),
     apiKey: z.string().min(1, "API key is required"),
     blogTitle: z.string().min(1, "Blog title is required"),
     blogUrl: z.string().url("Valid blog URL is required"),

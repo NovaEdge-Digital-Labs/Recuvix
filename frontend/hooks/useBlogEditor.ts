@@ -205,7 +205,17 @@ export function useBlogEditor() {
             for (const line of lines) {
                 const trimmed = line.trim();
                 if (!trimmed.startsWith("data: ")) continue;
-                const data = JSON.parse(trimmed.slice(6));
+
+                const dataStr = trimmed.slice(6);
+                if (dataStr === "[DONE]") continue;
+
+                let data;
+                try {
+                    data = JSON.parse(dataStr);
+                } catch (e) {
+                    console.warn("Failed to parse SSE event in useBlogEditor:", e);
+                    continue; // Skip unparseable lines gracefully instead of crashing
+                }
 
                 if (data.type === "chunk") {
                     fullText += data.text;

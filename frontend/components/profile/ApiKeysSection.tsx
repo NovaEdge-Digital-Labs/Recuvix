@@ -15,6 +15,7 @@ const PROVIDERS: { value: Provider; label: string }[] = [
     { value: 'claude', label: 'Anthropic (Claude)' },
     { value: 'gemini', label: 'Google Gemini' },
     { value: 'grok', label: 'xAI Grok' },
+    { value: 'openrouter', label: 'OpenRouter' },
 ];
 
 export function ApiKeysSection() {

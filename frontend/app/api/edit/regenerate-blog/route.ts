@@ -133,6 +133,21 @@ BEGIN REWRITING NOW.`;
                                 stream: true,
                             }),
                         });
+                    } else if (llmProvider === "openrouter") {
+                        response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${resolvedKey}`,
+                                "HTTP-Referer": "https://recuvix.com",
+                                "X-OpenRouter-Title": "Recuvix",
+                            },
+                            body: JSON.stringify({
+                                model: "openai/gpt-4o",
+                                messages: [{ role: "user", content: prompt }],
+                                stream: true,
+                            }),
+                        });
                     } else {
                         throw new Error("Unsupported LLM provider");
                     }
@@ -173,7 +188,7 @@ BEGIN REWRITING NOW.`;
                                         if (data.type === "content_block_delta" && data.delta?.text) {
                                             chunkText = data.delta.text;
                                         }
-                                    } else if (llmProvider === "openai" || llmProvider === "grok") {
+                                    } else if (llmProvider === "openai" || llmProvider === "grok" || llmProvider === "openrouter") {
                                         if (data.choices?.[0]?.delta?.content) {
                                             chunkText = data.choices[0].delta.content;
                                         }

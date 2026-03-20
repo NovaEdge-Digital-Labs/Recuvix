@@ -11,4 +11,7 @@ exports.seoMetaSchema = zod_1.z.object({
     thumbnailUrl: zod_1.z.string().url('Invalid thumbnail URL'),
     focusKeyword: zod_1.z.string().min(1, 'Focus keyword is required'),
     secondaryKeywords: zod_1.z.array(zod_1.z.string()).max(5).default([]),
+    metaTitle: zod_1.z.string().optional(),
+    metaDescription: zod_1.z.string().optional(),
+    companyName: zod_1.z.string().optional().default(''),
 });

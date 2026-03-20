@@ -92,7 +92,12 @@ export default async function RootLayout({
 }>) {
   const headersList = await headers();
   const tenantHeader = headersList.get('x-recuvix-tenant');
-  const tenant: TenantConfig | null = tenantHeader ? JSON.parse(tenantHeader) : null;
+  let tenant: TenantConfig | null = null;
+  try {
+    tenant = tenantHeader ? JSON.parse(tenantHeader) : null;
+  } catch (e) {
+    console.error('Failed to parse tenant header:', e);
+  }
 
   const orgJsonLd = {
     '@context': 'https://schema.org',
@@ -112,6 +117,17 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('error', function(e) {
+                if (e.target && e.target.tagName === 'IMG') {
+                  e.stopImmediatePropagation();
+                }
+              }, true);
+            `,
+          }}
         />
         {tenant && (
           <>
@@ -139,7 +155,7 @@ export default async function RootLayout({
           </>
         )}
       </head>
-      <body className="font-sans antialiased bg-background text-foreground min-h-screen">
+      <body suppressHydrationWarning className="font-sans antialiased bg-background text-foreground min-h-screen">
         <TenantProvider tenant={tenant}>
           <AuthProvider>
             <WorkspaceProvider>

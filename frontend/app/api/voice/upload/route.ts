@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { nanoid } from 'nanoid';
 import { estimateAudioDuration } from '@/lib/voice/fileSizeEstimator';
 
@@ -10,14 +11,30 @@ import { estimateAudioDuration } from '@/lib/voice/fileSizeEstimator';
 
 export async function POST(req: NextRequest) {
     try {
-        // 1. Get auth user
-        const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(
-            req.headers.get('Authorization')?.split(' ')[1] || ''
-        );
+        const supabase = await createServerSupabaseClient();
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
 
         if (authError || !user) {
+            // Fallback for manual token if needed (some clients might still send it)
+            const token = req.headers.get('Authorization')?.split(' ')[1];
+            if (token) {
+                const { data: { user: fallbackUser }, error: fallbackError } = await supabaseAdmin.auth.getUser(token);
+                if (!fallbackError && fallbackUser) {
+                    return proceedWithUpload(req, fallbackUser);
+                }
+            }
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
+
+        return proceedWithUpload(req, user);
+    } catch (error: any) {
+        console.error('API Error:', error);
+        return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+    }
+}
+
+async function proceedWithUpload(req: NextRequest, user: any) {
+    try {
 
         // 2. Parse multipart form data
         const formData = await req.formData();

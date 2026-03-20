@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ModelCard } from "@/components/onboarding/ModelCard";
 import { ApiKeyInput } from "@/components/onboarding/ApiKeyInput";
-import { AIModel } from "@/context/AppContext";
+import { AIModel } from "@/lib/types";
 
 export default function OnboardingPage() {
     const [selectedModel, setSelectedModel] = useState<AIModel | null>(null);
@@ -46,6 +46,16 @@ export default function OnboardingPage() {
             icon: (
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2L2 22h20L12 2zm0 3.5l7.5 15h-15L12 5.5zM11 15h2v2h-2v-2zm0-6h2v5h-2V9z" fill="currentColor" />
+                </svg>
+            )
+        },
+        {
+            id: "openrouter" as AIModel,
+            name: "OpenRouter",
+            description: "Access any model via OpenRouter",
+            icon: (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
             )
         }

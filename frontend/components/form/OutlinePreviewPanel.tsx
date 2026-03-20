@@ -148,15 +148,11 @@ export function OutlinePreviewPanel({
                 aria-label="Blog Outline Preview"
                 className={cn(
                     "fixed z-50 bg-[#0f0f0f] border border-[#2a2a2a] shadow-[0_0_60px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col",
-                    // Desktop
-                    "lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 lg:w-full lg:max-w-[680px] lg:max-h-[85vh] lg:rounded-2xl",
-                    // Mobile
-                    "bottom-0 left-0 right-0 max-h-[90vh] rounded-t-[20px] lg:bottom-auto lg:left-auto lg:right-auto",
-                    // Animation
-                    "transition-all duration-300",
+                    "transition-all duration-300 ease-out",
+                    "left-1/2 top-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-[680px] h-[85vh] md:h-[min(85vh,720px)] rounded-2xl",
                     mounted
-                        ? "opacity-100 lg:scale-100 translate-y-0"
-                        : "opacity-0 lg:scale-95 translate-y-full lg:translate-y-0"
+                        ? "opacity-100 scale-100 -translate-y-1/2"
+                        : "opacity-0 scale-95 -translate-y-[45%]"
                 )}
             >
                 {/* Mobile handle */}

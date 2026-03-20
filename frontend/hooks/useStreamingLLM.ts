@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { AIModel, useAppContext } from "@/context/AppContext";
+import { useAppContext } from "@/context/AppContext";
+import { AIModel } from "@/lib/types";
 
 export interface StreamOptions {
     prompt: string;
@@ -94,7 +95,7 @@ export function useStreamingLLM() {
                     });
                 } else if (selectedModel === "gemini") {
                     // Gemini SSE Stream implementation
-                    const modelName = "gemini-3-flash-preview";
+                    const modelName = "gemini-1.5-flash";
                     const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:streamGenerateContent?alt=sse&key=${apiKey}`;
                     console.log(`[StreamingLLM] Fetching Gemini (v1beta) from: ${url}`);
 
@@ -131,6 +132,27 @@ export function useStreamingLLM() {
                             model: "grok-2-latest",
                             messages,
                             stream: true,
+                        }),
+                        signal,
+                    });
+                } else if (selectedModel === "openrouter") {
+                    const messages = [];
+                    if (systemInstruction) {
+                        messages.push({ role: "system", content: systemInstruction });
+                    }
+                    messages.push({ role: "user", content: prompt });
+
+                    response = await fetch("/api/proxy/openrouter/stream", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            apiKey,
+                            model: "google/gemini-2.0-flash-001",
+                            messages,
+                            stream: true,
+                            max_tokens: 4000,
                         }),
                         signal,
                     });
@@ -177,7 +199,7 @@ export function useStreamingLLM() {
                                     if (data.type === "content_block_delta" && data.delta?.text) {
                                         chunkText = data.delta.text;
                                     }
-                                } else if (selectedModel === "openai" || selectedModel === "grok") {
+                                } else if (selectedModel === "openai" || selectedModel === "grok" || selectedModel === "openrouter") {
                                     if (data.choices?.[0]?.delta?.content) {
                                         chunkText = data.choices[0].delta.content;
                                     }

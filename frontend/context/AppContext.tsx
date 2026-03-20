@@ -2,8 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-
-export type AIModel = "claude" | "openai" | "gemini" | "grok";
+import { AIModel } from "@/lib/types";
 
 export interface ApiConfig {
     selectedModel: AIModel | null;
@@ -98,8 +97,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         }
     }, [preferences.theme]);
 
-    // Show nothing during SSR to avoid hydration mismatches with localStorage values
-    if (!isHydrated) return <div className="min-h-screen bg-[#0a0a0a]" />;
+    // We let hydration happen naturally to avoid blank screens
 
     return (
         <AppContext.Provider value={{

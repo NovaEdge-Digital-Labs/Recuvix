@@ -15,11 +15,25 @@ export function LinkingQuickAccess({ blogId }: LinkingQuickAccessProps) {
     useEffect(() => {
         async function fetchBriefStats() {
             try {
-                const res = await fetch(`/api/linking/analyse?blogId=${blogId}`);
+                const res = await fetch(`/api/linking/analyse`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ blogId })
+                });
+
+                if (!res.ok) {
+                    const errText = await res.text();
+                    throw new Error(`Analyse API failed: ${errText.substring(0, 50)}`);
+                }
                 const data = await res.json();
 
                 // We also want to know how many are applied
                 const graphRes = await fetch(`/api/linking/graph`);
+
+                if (!graphRes.ok) {
+                    const errText = await graphRes.text();
+                    throw new Error(`Graph API failed: ${errText.substring(0, 50)}`);
+                }
                 const graphData = await graphRes.json();
 
                 const blogNode = graphData.nodes?.find((n: any) => n.id === blogId);

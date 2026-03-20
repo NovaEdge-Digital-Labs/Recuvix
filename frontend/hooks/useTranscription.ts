@@ -31,10 +31,6 @@ export function useTranscription() {
             setUploadProgress(30);
             const res = await fetch('/api/voice/upload', {
                 method: 'POST',
-                headers: {
-                    // Token will be handled by interceptors if any, or we pass it here
-                    'Authorization': `Bearer ${localStorage.getItem('supabase-auth-token')}`
-                },
                 body: formData,
             });
 
@@ -70,7 +66,6 @@ export function useTranscription() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('supabase-auth-token')}`
                 },
                 body: JSON.stringify(options),
             });
@@ -91,11 +86,7 @@ export function useTranscription() {
 
         pollingIntervalRef.current = setInterval(async () => {
             try {
-                const res = await fetch(`/api/voice/status/${id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('supabase-auth-token')}`
-                    }
-                });
+                const res = await fetch(`/api/voice/status/${id}`);
                 const data = await res.json();
 
                 if (data.status === 'complete') {
@@ -140,7 +131,6 @@ export function useTranscription() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('supabase-auth-token')}`
                 },
                 body: JSON.stringify(options),
             });

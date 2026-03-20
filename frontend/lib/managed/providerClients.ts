@@ -249,3 +249,90 @@ export async function streamFromGrok(
     // Grok often uses OpenAI-compatible API
     return streamFromOpenAI(apiKey, model, prompt, maxTokens, onChunk, onComplete, onError, signal);
 }
+
+export async function streamFromOpenRouter(
+    apiKey: string,
+    model: string,
+    prompt: string,
+    maxTokens: number,
+    onChunk: (text: string) => void,
+    onComplete: (usage: TokenUsage) => void,
+    onError: (error: Error, code: string) => void,
+    signal: AbortSignal,
+): Promise<void> {
+    try {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`,
+                'HTTP-Referer': 'https://recuvix.ai', // Optional, for OpenRouter rankings
+                'X-Title': 'Recuvix', // Optional
+            },
+            body: JSON.stringify({
+                model,
+                messages: [{ role: 'user', content: prompt }],
+                max_tokens: maxTokens,
+                stream: true,
+            }),
+            signal,
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error?.message || `HTTP ${response.status}`);
+        }
+
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error('No body in response');
+
+        const decoder = new TextDecoder();
+        let promptTokens = 0;
+        let completionTokens = 0;
+        let accumulatedText = '';
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value);
+            const lines = chunk.split('\n');
+
+            for (const line of lines) {
+                if (line.trim() === 'data: [DONE]') break;
+                if (line.startsWith('data: ')) {
+                    try {
+                        const data = JSON.parse(line.slice(6));
+                        const text = data.choices[0]?.delta?.content || '';
+                        if (text) {
+                            accumulatedText += text;
+                            onChunk(text);
+                        }
+
+                        if (data.usage) {
+                            promptTokens = data.usage.prompt_tokens;
+                            completionTokens = data.usage.completion_tokens;
+                        }
+                    } catch {
+                        // Partial JSON
+                    }
+                }
+            }
+        }
+
+        if (promptTokens === 0) {
+            promptTokens = Math.ceil(prompt.length / 4);
+            completionTokens = Math.ceil(accumulatedText.length / 4);
+        }
+
+        onComplete({
+            promptTokens,
+            completionTokens,
+            totalTokens: promptTokens + completionTokens,
+        });
+    } catch (err: unknown) {
+        if (err instanceof Error && err.name === 'AbortError') return;
+        const error = err instanceof Error ? err : new Error(String(err));
+        onError(error, error.message.includes('429') ? '429' : error.message.includes('401') ? '401' : '500');
+    }
+}

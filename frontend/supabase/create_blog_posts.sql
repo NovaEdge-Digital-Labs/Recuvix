@@ -21,8 +21,17 @@ CREATE TABLE IF NOT EXISTS public.blog_posts (
 ALTER TABLE public.blog_posts ENABLE ROW LEVEL SECURITY;
 
 -- Allow public read access
-CREATE POLICY "Allow public read access" ON public.blog_posts
-    FOR SELECT USING (is_published = true);
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_policies 
+        WHERE tablename = 'blog_posts' 
+        AND policyname = 'Allow public read access'
+    ) THEN
+        CREATE POLICY "Allow public read access" ON public.blog_posts
+            FOR SELECT USING (is_published = true);
+    END IF;
+END $$;
 
 -- Allow authenticated users to manage blog posts (optional, adjust as needed)
 -- CREATE POLICY "Allow authenticated manage" ON public.blog_posts

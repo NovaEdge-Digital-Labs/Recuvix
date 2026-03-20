@@ -1,5 +1,5 @@
 import React from "react";
-import { AIModel } from "@/context/AppContext";
+import { AIModel } from "@/lib/types";
 
 export const modelIcons: Record<AIModel, React.ReactNode> = {
     claude: (
@@ -20,6 +20,11 @@ export const modelIcons: Record<AIModel, React.ReactNode> = {
     grok: (
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2L2 22h20L12 2zm0 3.5l7.5 15h-15L12 5.5zM11 15h2v2h-2v-2zm0-6h2v5h-2V9z" fill="currentColor" />
+        </svg>
+    ),
+    openrouter: (
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2z" fill="currentColor" />
         </svg>
     )
 };

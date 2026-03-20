@@ -25,8 +25,8 @@ async function generateAiImage(prompt, country, style) {
     }
     const input = {
         prompt: enhancedPrompt,
-        width: 1200,
-        height: 630,
+        width: 1280,
+        height: 720,
         refine: "expert_ensemble_refiner",
         scheduler: "K_EULER",
         lora_scale: 0.6,

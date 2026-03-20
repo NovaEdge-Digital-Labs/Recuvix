@@ -251,6 +251,23 @@ async function callLLM(provider: string, apiKey: string, prompt: string, systemI
                 ],
             }),
         });
+    } else if (provider === "openrouter") {
+        response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${apiKey}`,
+                "HTTP-Referer": "https://recuvix.com",
+                "X-OpenRouter-Title": "Recuvix",
+            },
+            body: JSON.stringify({
+                model: "openai/gpt-4o",
+                messages: [
+                    { role: "system", content: systemInstruction },
+                    { role: "user", content: prompt }
+                ],
+            }),
+        });
     } else {
         throw new Error("Unsupported LLM provider");
     }
@@ -262,7 +279,7 @@ async function callLLM(provider: string, apiKey: string, prompt: string, systemI
 
     const data = await response.json();
     if (provider === "claude") return data.content[0].text;
-    if (provider === "openai" || provider === "grok") return data.choices[0].message.content;
+    if (provider === "openai" || provider === "grok" || provider === "openrouter") return data.choices[0].message.content;
     if (provider === "gemini") return data.candidates[0].content.parts[0].text;
 
     return "";

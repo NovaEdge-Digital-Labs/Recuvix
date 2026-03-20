@@ -38,19 +38,21 @@ export function WorkspaceSwitcher() {
     return (
         <>
             <DropdownMenu>
-                <DropdownMenuTrigger>
-                    <Button variant="ghost" className="relative h-10 w-full justify-start gap-2 px-2 hover:bg-accent focus-visible:ring-0">
-                        <Avatar className="h-6 w-6 border shadow-sm">
-                            <AvatarImage src={activeWorkspace?.avatar_url || ''} />
-                            <AvatarFallback className="text-[10px] bg-primary/10 text-primary">
-                                {activeWorkspace?.name?.charAt(0) || <Building2 className="h-3 w-3" />}
-                            </AvatarFallback>
-                        </Avatar>
-                        <span className="flex-1 truncate text-left text-sm font-medium">
-                            {activeWorkspace?.name || 'Select Workspace'}
-                        </span>
-                        <ChevronDown className="h-4 w-4 text-muted-foreground opacity-50" />
-                    </Button>
+                <DropdownMenuTrigger
+                    render={
+                        <Button variant="ghost" className="relative h-10 w-full justify-start gap-2 px-2 hover:bg-accent focus-visible:ring-0" />
+                    }
+                >
+                    <Avatar className="h-6 w-6 border shadow-sm">
+                        <AvatarImage src={activeWorkspace?.avatar_url || ''} />
+                        <AvatarFallback className="text-[10px] bg-primary/10 text-primary">
+                            {activeWorkspace?.name?.charAt(0) || <Building2 className="h-3 w-3" />}
+                        </AvatarFallback>
+                    </Avatar>
+                    <span className="flex-1 truncate text-left text-sm font-medium">
+                        {activeWorkspace?.name || 'Select Workspace'}
+                    </span>
+                    <ChevronDown className="h-4 w-4 text-muted-foreground opacity-50" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-64" align="start" sideOffset={8}>
                     <DropdownMenuGroup>

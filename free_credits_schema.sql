@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS public.credit_rules (
   id uuid primary key default uuid_generate_v4(),
 
-  name text not null,
+  name text not null unique,
   -- e.g. "New User Welcome Bonus"
   description text,
 
@@ -329,26 +329,74 @@ BEGIN
     END IF;
 END $$;
 
+-- Failsafe: ensure all required columns exist before insert
+DO $$ 
+BEGIN 
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='credit_rules' AND column_name='description') THEN
+    ALTER TABLE public.credit_rules ADD COLUMN description text;
+  END IF;
+  
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='credit_rules' AND column_name='rule_type') THEN
+    ALTER TABLE public.credit_rules ADD COLUMN rule_type text;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='credit_rules' AND column_name='trigger_event') THEN
+    ALTER TABLE public.credit_rules ADD COLUMN trigger_event text;
+    -- Set default for existing rows if any
+    UPDATE public.credit_rules SET trigger_event = 'signup' WHERE rule_type = 'signup_bonus';
+    UPDATE public.credit_rules SET trigger_event = 'manual' WHERE trigger_event IS NULL;
+  END IF;
+
+  -- Ensure trigger_event doesn't violate not-null from other migrations
+  -- But we need to make it nullable temporarily or provide defaults
+  ALTER TABLE public.credit_rules ALTER COLUMN trigger_event DROP NOT NULL;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='credit_rules' AND column_name='credits_amount') THEN
+    ALTER TABLE public.credit_rules ADD COLUMN credits_amount integer;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='credit_rules' AND column_name='auto_apply') THEN
+    ALTER TABLE public.credit_rules ADD COLUMN auto_apply boolean default false;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='credit_rules' AND column_name='is_active') THEN
+    ALTER TABLE public.credit_rules ADD COLUMN is_active boolean default true;
+  END IF;
+
+  -- Ensure name is unique for ON CONFLICT
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'credit_rules_name_key'
+  ) THEN
+    ALTER TABLE public.credit_rules ADD CONSTRAINT credit_rules_name_key UNIQUE (name);
+  END IF;
+END $$;
+
 -- ============================================
 -- SEED DEFAULT RULES
 -- ============================================
 INSERT INTO public.credit_rules (
-  name, description, rule_type,
+  name, description, rule_type, trigger_event,
   credits_amount, auto_apply, is_active
 ) VALUES
 (
   'New User Welcome Bonus',
   'Given to every new user on signup automatically',
-  'signup_bonus', 5, true, true
+  'signup_bonus', 'signup', 5, true, true
 ),
 (
   'First Purchase Bonus',
   'Extra credits when user makes their first purchase',
-  'milestone_bonus', 10, false, false
+  'milestone_bonus', 'purchase', 10, false, false
 ),
 (
   'BYOK User Appreciation',
   'Free credits for users who connected their own API key',
-  'manual_segment', 5, false, false
+  'manual_segment', 'manual', 5, false, false
 )
-ON CONFLICT DO NOTHING;
+ON CONFLICT (name) DO UPDATE SET
+  description = EXCLUDED.description,
+  rule_type = EXCLUDED.rule_type,
+  trigger_event = EXCLUDED.trigger_event,
+  credits_amount = EXCLUDED.credits_amount,
+  auto_apply = EXCLUDED.auto_apply,
+  is_active = EXCLUDED.is_active;

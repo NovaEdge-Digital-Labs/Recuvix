@@ -1,12 +1,13 @@
 import { NextRequest } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { forwardLLMStream } from '@/lib/managed/streamForwarder';
 import { z } from 'zod';
 import { resolveLLMKey } from '@/lib/wl/tenantKeyResolver';
 
 const generateSchema = z.object({
     recordingId: z.string().uuid(),
-    llmProvider: z.enum(['claude', 'openai', 'gemini', 'grok']),
+    llmProvider: z.enum(['claude', 'openai', 'gemini', 'grok', 'openrouter']),
     apiKey: z.string(),
     blogTitle: z.string(),
     focusKeyword: z.string(),
@@ -25,13 +26,30 @@ const generateSchema = z.object({
 
 export async function POST(req: NextRequest) {
     try {
-        const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(
-            req.headers.get('Authorization')?.split(' ')[1] || ''
-        );
+        const supabase = await createServerSupabaseClient();
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
 
         if (authError || !user) {
+            // Fallback for manual token
+            const token = req.headers.get('Authorization')?.split(' ')[1];
+            if (token) {
+                const { data: { user: fallbackUser }, error: fallbackError } = await supabaseAdmin.auth.getUser(token);
+                if (!fallbackError && fallbackUser) {
+                    return proceedWithGenerate(req, fallbackUser);
+                }
+            }
             return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
         }
+
+        return proceedWithGenerate(req, user);
+    } catch (error: any) {
+        console.error('Generate Blog API Error:', error);
+        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    }
+}
+
+async function proceedWithGenerate(req: NextRequest, user: any) {
+    try {
 
         const tenantId = req.headers.get('x-recuvix-tenant');
         const body = await req.json();
@@ -138,7 +156,11 @@ BEGIN WRITING NOW.
                 const forwardResult = await forwardLLMStream(
                     llmProvider,
                     resolvedKey,
-                    llmProvider === 'openai' ? 'gpt-4o' : llmProvider === 'claude' ? 'claude-3-5-sonnet-20240620' : 'gemini-1.5-pro',
+                    llmProvider === 'openai' ? 'gpt-4o' :
+                        llmProvider === 'claude' ? 'claude-3-5-sonnet-20240620' :
+                            llmProvider === 'openrouter' ? 'openai/gpt-4o' :
+                                llmProvider === 'grok' ? 'grok-2-latest' :
+                                    'gemini-1.5-pro',
                     prompt,
                     writer,
                     req.signal

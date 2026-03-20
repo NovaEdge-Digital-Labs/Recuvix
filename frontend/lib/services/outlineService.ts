@@ -78,115 +78,147 @@ export async function generateOutline(params: OutlineGenerateRequest): Promise<O
     }
 
     const prompt = buildOutlinePrompt(params);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
 
     let response: Response;
-
-    if (llmProvider === "claude") {
-        response = await fetch("https://api.anthropic.com/v1/messages", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "x-api-key": apiKey,
-                "anthropic-version": "2023-06-01",
-            },
-            body: JSON.stringify({
-                model: "claude-opus-4-5",
-                max_tokens: 800,
-                stream: false,
-                messages: [{ role: "user", content: prompt }],
-            }),
-        });
-    } else if (llmProvider === "openai") {
-        response = await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify({
-                model: "gpt-4o",
-                max_tokens: 800,
-                stream: false,
-                messages: [{ role: "user", content: prompt }],
-            }),
-        });
-    } else if (llmProvider === "gemini") {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-        response = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }],
-            }),
-        });
-    } else if (llmProvider === "grok") {
-        response = await fetch("https://api.x.ai/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify({
-                model: "grok-3",
-                max_tokens: 800,
-                stream: false,
-                messages: [{ role: "user", content: prompt }],
-            }),
-        });
-    } else {
-        throw new Error("Unsupported LLM provider");
-    }
-
-    if (response.status === 401) {
-        throw new Error("Invalid API key");
-    }
-    if (response.status === 429) {
-        throw new Error("Rate limited. Try again shortly.");
-    }
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`LLM Error: ${response.status} - ${errorText}`);
-    }
-
-    const data = await response.json();
-
-    let resultText: string;
     try {
+
         if (llmProvider === "claude") {
-            resultText = data.content[0].text;
-        } else if (llmProvider === "openai" || llmProvider === "grok") {
-            resultText = data.choices[0].message.content;
+            response = await fetch("https://api.anthropic.com/v1/messages", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-api-key": apiKey,
+                    "anthropic-version": "2023-06-01",
+                },
+                body: JSON.stringify({
+                    model: "claude-3-5-sonnet-20241022",
+                    max_tokens: 800,
+                    stream: false,
+                    messages: [{ role: "user", content: prompt }],
+                }),
+                signal: controller.signal,
+            });
+        } else if (llmProvider === "openai") {
+            response = await fetch("https://api.openai.com/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify({
+                    model: "gpt-4o",
+                    max_tokens: 1500,
+                    stream: false,
+                    messages: [{ role: "user", content: prompt }],
+                }),
+                signal: controller.signal,
+            });
         } else if (llmProvider === "gemini") {
-            resultText = data.candidates[0].content.parts[0].text;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }],
+                }),
+                signal: controller.signal,
+            });
+        } else if (llmProvider === "grok") {
+            response = await fetch("https://api.x.ai/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify({
+                    model: "grok-2-latest",
+                    max_tokens: 800,
+                    stream: false,
+                    messages: [{ role: "user", content: prompt }],
+                }),
+                signal: controller.signal,
+            });
+        } else if (llmProvider === "openrouter") {
+            response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${apiKey}`,
+                    "HTTP-Referer": "https://recuvix.com",
+                    "X-OpenRouter-Title": "Recuvix",
+                },
+                body: JSON.stringify({
+                    model: "google/gemini-2.0-flash-001",
+                    max_tokens: 1500,
+                    stream: false,
+                    messages: [{ role: "user", content: prompt }],
+                }),
+                signal: controller.signal,
+            });
         } else {
-            throw new Error("Unknown provider response shape");
+            throw new Error("Unsupported LLM provider");
         }
-    } catch {
-        throw new Error("Failed to parse LLM response");
+
+        if (response.status === 401) {
+            throw new Error("Invalid API key");
+        }
+        if (response.status === 429) {
+            throw new Error("Rate limited. Try again shortly.");
+        }
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`LLM Error: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json();
+
+        let resultText: string;
+        try {
+            if (llmProvider === "claude") {
+                resultText = data.content[0].text;
+            } else if (llmProvider === "openai" || llmProvider === "grok" || llmProvider === "openrouter") {
+                resultText = data.choices[0].message.content;
+            } else if (llmProvider === "gemini") {
+                resultText = data.candidates[0].content.parts[0].text;
+            } else {
+                throw new Error("Unknown provider response shape");
+            }
+        } catch {
+            throw new Error("Failed to parse LLM response");
+        }
+
+        // Clean in case the LLM wrapped in backticks
+        resultText = resultText.replace(/```json/g, "").replace(/```/g, "").trim();
+
+        let parsed: { h1: string; focusKeyword: string; h2s: string[]; estimatedReadTime: number; contentStrategy: string };
+        try {
+            parsed = JSON.parse(resultText);
+        } catch {
+            const raw = resultText.slice(0, 200);
+            throw new Error(`JSON_PARSE_FAILURE:${raw}`);
+        }
+
+        const h2sWithMeta: H2Item[] = (parsed.h2s || []).map((text: string) => ({
+            id: nanoid(),
+            text,
+            locked: false,
+        }));
+
+        return {
+            h1: parsed.h1,
+            focusKeyword: parsed.focusKeyword || params.focusKeyword || "",
+            h2s: h2sWithMeta,
+            estimatedReadTime: parsed.estimatedReadTime || Math.ceil(params.wordCount / 200),
+            contentStrategy: parsed.contentStrategy || "",
+        };
+    } catch (error: any) {
+        if (error.name === "AbortError") {
+            throw new Error("Generation timed out after 60 seconds.");
+        }
+        throw error;
+    } finally {
+        clearTimeout(timeoutId);
     }
-
-    // Clean in case the LLM wrapped in backticks
-    resultText = resultText.replace(/```json/g, "").replace(/```/g, "").trim();
-
-    let parsed: { h1: string; focusKeyword: string; h2s: string[]; estimatedReadTime: number; contentStrategy: string };
-    try {
-        parsed = JSON.parse(resultText);
-    } catch {
-        const raw = resultText.slice(0, 200);
-        throw new Error(`JSON_PARSE_FAILURE:${raw}`);
-    }
-
-    const h2sWithMeta: H2Item[] = (parsed.h2s || []).map((text: string) => ({
-        id: nanoid(),
-        text,
-        locked: false,
-    }));
-
-    return {
-        h1: parsed.h1,
-        focusKeyword: parsed.focusKeyword || params.focusKeyword || "",
-        h2s: h2sWithMeta,
-        estimatedReadTime: parsed.estimatedReadTime || Math.ceil(params.wordCount / 200),
-        contentStrategy: parsed.contentStrategy || "",
-    };
 }

@@ -43,27 +43,23 @@ create table if not exists public.credit_transactions (
   -- positive = credits added
   -- negative = credits deducted
 
-  balance_after integer not null,
+  balance_after integer not null
   -- snapshot of balance after this transaction
-
-  -- For purchase transactions
-  razorpay_order_id text,
-  razorpay_payment_id text,
-  razorpay_signature text,
-  pack_id text,              -- starter/pro/agency/mega
-  pack_name text,
-  amount_paid_inr integer,   -- in paise (₹499 = 49900)
-
-  -- For usage transactions
-  blog_id uuid references public.blogs(id)
-    on delete set null,
-  blog_topic text,
-  llm_provider text,
-
-  -- Metadata
-  description text,
-  created_at timestamptz not null default now()
 );
+
+-- Add Razorpay columns if they don't exist
+alter table public.credit_transactions
+  add column if not exists razorpay_order_id text,
+  add column if not exists razorpay_payment_id text,
+  add column if not exists razorpay_signature text,
+  add column if not exists pack_id text,
+  add column if not exists pack_name text,
+  add column if not exists amount_paid_inr integer,
+  add column if not exists blog_id uuid references public.blogs(id) on delete set null,
+  add column if not exists blog_topic text,
+  add column if not exists llm_provider text,
+  add column if not exists description text,
+  add column if not exists created_at timestamptz not null default now();
 
 create index if not exists credit_txn_user_idx
   on public.credit_transactions(
@@ -89,6 +85,10 @@ end $$;
 -- RAZORPAY ORDERS TABLE
 -- Track pending orders before payment confirmation
 -- ============================================
+-- ============================================
+-- RAZORPAY ORDERS TABLE
+-- Track pending orders before payment confirmation
+-- ============================================
 create table if not exists public.razorpay_orders (
   id uuid primary key default uuid_generate_v4(),
   user_id uuid references auth.users(id)
@@ -108,6 +108,10 @@ create table if not exists public.razorpay_orders (
   expires_at timestamptz not null
     default (now() + interval '30 minutes')
 );
+
+-- Ensure user_id exists even if table was created with profile_id
+alter table public.razorpay_orders
+  add column if not exists user_id uuid references auth.users(id) on delete cascade;
 
 alter table public.razorpay_orders
   enable row level security;

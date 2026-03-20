@@ -13,7 +13,7 @@ const generateSchema = z.object({
     tone: z.string(),
     wordCount: z.number(),
     outputFormat: z.string(),
-    preferredProvider: z.enum(['claude', 'openai', 'gemini', 'grok']),
+    preferredProvider: z.enum(['claude', 'openai', 'gemini', 'grok', 'openrouter']),
     approvedOutline: z.any().optional(),
     authorDetails: z.any().optional(),
     includeAiImages: z.boolean().optional().default(false),

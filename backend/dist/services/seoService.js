@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateSeoMeta = generateSeoMeta;
-const slugGenerator_1 = require("@/lib/utils/slugGenerator");
-const countryLocaleMap_1 = require("@/lib/utils/countryLocaleMap");
+const slugGenerator_1 = require("../utils/slugGenerator");
+const countryLocaleMap_1 = require("../utils/countryLocaleMap");
 // Utility to create the HTML meta string
 function buildHtmlMetaString(meta) {
     let html = `
@@ -32,18 +32,21 @@ function generateSeoMeta(data) {
     // Clean URL making sure no double slashes
     const baseUrl = data.websiteUrl.endsWith('/') ? data.websiteUrl.slice(0, -1) : data.websiteUrl;
     const canonicalUrl = `${baseUrl}/${slug}`;
-    // Title max 60 chars. Let's just use the blog title directly, bounded.
-    const title = data.blogTitle.length > 60 ? data.blogTitle.substring(0, 57) + '...' : data.blogTitle;
-    // Truncate description from content (or we could extract first paragraph).
-    // Usually the LLM provides an intro.
-    // Instead, the prompt says "Meta description: 150-160 chars, include focus keyword, ends with a soft CTA like 'Learn more' or 'Read now'".
-    // We don't have an LLM here, so we'll synthesize it from the title + keyword + CTA.
-    const baseDesc = `Learn all about ${data.focusKeyword} in our latest guide: ${data.blogTitle}. `;
-    const cta = 'Read now!';
-    let description = baseDesc + cta;
+    // Prefer LLM generated title, fallback to blogTitle
+    let title = data.metaTitle || data.blogTitle;
+    if (title.length > 60)
+        title = title.substring(0, 57) + '...';
+    // Prefer LLM generated description, fallback to template
+    let description = data.metaDescription;
+    if (!description) {
+        const baseDesc = `Learn all about ${data.focusKeyword} in our latest guide: ${data.blogTitle}. `;
+        const cta = 'Read now!';
+        description = baseDesc + cta;
+    }
     if (description.length > 160) {
         description = description.substring(0, 157) + '...';
     }
+    const brandName = data.companyName || data.websiteUrl.replace(/https?:\/\//, '').split('/')[0];
     const openGraph = {
         'og:title': title,
         'og:description': description,
@@ -51,7 +54,7 @@ function generateSeoMeta(data) {
         'og:url': canonicalUrl,
         'og:type': 'article',
         'og:locale': localeData.locale,
-        'og:site_name': data.websiteUrl.replace(/https?:\/\//, ''),
+        'og:site_name': brandName,
     };
     const twitterCard = {
         'twitter:card': 'summary_large_image',
@@ -70,7 +73,7 @@ function generateSeoMeta(data) {
         },
         publisher: {
             '@type': 'Organization',
-            name: data.websiteUrl,
+            name: brandName,
             // Ideally logo goes here, but we don't strictly have access to the logo URL at this exact moment from the request unless passed
             logo: {
                 '@type': 'ImageObject',

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { createServerSupabaseClient } from '@/lib/supabase/server';
 
 /**
  * POST /api/voice/clean-transcript
@@ -8,13 +9,30 @@ import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export async function POST(req: NextRequest) {
     try {
-        const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(
-            req.headers.get('Authorization')?.split(' ')[1] || ''
-        );
+        const supabase = await createServerSupabaseClient();
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
 
         if (authError || !user) {
+            // Fallback for manual token
+            const token = req.headers.get('Authorization')?.split(' ')[1];
+            if (token) {
+                const { data: { user: fallbackUser }, error: fallbackError } = await supabaseAdmin.auth.getUser(token);
+                if (!fallbackError && fallbackUser) {
+                    return proceedWithClean(req, fallbackUser);
+                }
+            }
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
+
+        return proceedWithClean(req, user);
+    } catch (error: any) {
+        console.error('Cleaning API Error:', error);
+        return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+    }
+}
+
+async function proceedWithClean(req: NextRequest, user: any) {
+    try {
 
         const {
             recordingId, llmProvider, apiKey, targetBlogTopic,
@@ -156,6 +174,24 @@ No markdown, no code fences.
             });
             const data = await res.json();
             llmResponseText = data.candidates[0]?.content?.parts[0]?.text;
+        } else if (llmProvider === 'openrouter') {
+            const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`,
+                    'HTTP-Referer': 'https://recuvix.ai',
+                    'X-Title': 'Recuvix',
+                },
+                body: JSON.stringify({
+                    model: 'openai/gpt-4o',
+                    messages: [{ role: 'user', content: prompt }],
+                    temperature: 0.1,
+                    max_tokens: 4000,
+                }),
+            });
+            const data = await res.json();
+            llmResponseText = data.choices[0]?.message?.content;
         }
 
         if (!llmResponseText) {

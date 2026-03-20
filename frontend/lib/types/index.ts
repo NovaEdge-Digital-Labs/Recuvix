@@ -47,3 +47,5 @@ export type UploadResponse = {
     width: number;
     height: number;
 };
+
+export type AIModel = "claude" | "openai" | "gemini" | "grok" | "openrouter";

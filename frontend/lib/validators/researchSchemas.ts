@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const researchTopicRequestSchema = z.object({
-    llmProvider: z.enum(['claude', 'openai', 'gemini', 'grok']),
+    llmProvider: z.enum(['claude', 'openai', 'gemini', 'grok', 'openrouter']),
     apiKey: z.string().min(1, 'API key is required'),
     niche: z.string().min(3, 'Niche is too vague').max(100),
     country: z.string().min(1, 'Country is required'),

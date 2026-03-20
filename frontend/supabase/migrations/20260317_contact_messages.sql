@@ -1,4 +1,4 @@
-CREATE TABLE public.contact_messages (
+CREATE TABLE IF NOT EXISTS public.contact_messages (
   id uuid primary key
     default uuid_generate_v4(),
   ticket_id text not null unique,
@@ -63,6 +63,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS before_contact_insert ON public.contact_messages;
 CREATE TRIGGER before_contact_insert
   BEFORE INSERT ON public.contact_messages
   FOR EACH ROW EXECUTE PROCEDURE

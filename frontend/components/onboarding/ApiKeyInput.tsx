@@ -4,7 +4,8 @@ import { useState } from "react";
 import { Eye, EyeOff, Lock, CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AIModel, useAppContext } from "@/context/AppContext";
+import { useAppContext } from "@/context/AppContext";
+import { AIModel } from "@/lib/types";
 import { useRouter } from "next/navigation";
 
 export function ApiKeyInput({ modelId }: { modelId: AIModel }) {
@@ -20,6 +21,7 @@ export function ApiKeyInput({ modelId }: { modelId: AIModel }) {
         openai: "sk-proj-...",
         gemini: "AIzaSy...",
         grok: "xai-...",
+        openrouter: "sk-or-v1-...",
     };
 
     const testConnection = async () => {
@@ -30,36 +32,13 @@ export function ApiKeyInput({ modelId }: { modelId: AIModel }) {
         let success = false;
 
         try {
-            if (modelId === "claude") {
-                const res = await fetch("https://api.anthropic.com/v1/models", {
-                    method: "GET",
-                    headers: {
-                        "x-api-key": apiKey,
-                        "anthropic-version": "2023-06-01",
-                        "anthropic-dangerous-direct-browser-access": "true",
-                    },
-                });
-                success = res.ok;
-            } else if (modelId === "openai") {
-                const res = await fetch("https://api.openai.com/v1/models", {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${apiKey}`,
-                    },
-                });
-                success = res.ok;
-            } else if (modelId === "gemini") {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
-                success = res.ok;
-            } else if (modelId === "grok") {
-                const res = await fetch("https://api.x.ai/v1/models", {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${apiKey}`,
-                    },
-                });
-                success = res.ok;
-            }
+            const res = await fetch("/api/onboarding/validate-key", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ modelId, apiKey }),
+            });
+            const data = await res.json();
+            success = data.success;
         } catch (e) {
             console.error("Connection test failed", e);
             success = false;

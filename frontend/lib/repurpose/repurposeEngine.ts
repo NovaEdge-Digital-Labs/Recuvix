@@ -1,9 +1,9 @@
 import { buildRepurposePrompt, RepurposeFormat, RepurposeParams } from './repurposePromptBuilder';
 import { parseRepurposeResponse, RepurposeContent } from './repurposeContentParser';
-import { streamFromClaude, streamFromOpenAI, streamFromGemini, streamFromGrok } from '../managed/providerClients';
+import { streamFromClaude, streamFromOpenAI, streamFromGemini, streamFromGrok, streamFromOpenRouter } from '../managed/providerClients';
 
 export interface ApiConfig {
-    selectedModel: 'claude' | 'openai' | 'gemini' | 'grok';
+    selectedModel: 'claude' | 'openai' | 'gemini' | 'grok' | 'openrouter';
     apiKey: string;
 }
 
@@ -70,6 +70,18 @@ export async function generateRepurposedContent(
                 await streamFromGemini(
                     apiKey,
                     'gemini-1.5-flash-latest',
+                    prompt,
+                    4000,
+                    handleChunk,
+                    () => handleComplete(),
+                    handleError,
+                    signal
+                );
+                break;
+            case 'openrouter':
+                await streamFromOpenRouter(
+                    apiKey,
+                    'anthropic/claude-3.5-sonnet', // Default OpenRouter model
                     prompt,
                     4000,
                     handleChunk,
